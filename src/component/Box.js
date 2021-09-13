@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Card,Button,Form,InputGroup, Col} from 'react-bootstrap';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import "./Box.css";
+import { FaSearchengin } from 'react-icons/fa';
+import { WiDayThunderstorm } from "react-icons/wi";
+
+
 export default class Box extends Component {
     render() {
         return (
@@ -12,8 +15,9 @@ export default class Box extends Component {
                     <Form.Group as={Col}>
                         <InputGroup>
                             <InputGroup.Prepend>
-                                <InputGroup.Text>
-                                <FontAwesomeIcon icon="search" />           
+                                <InputGroup.Text> 
+                                    <FaSearchengin />
+                               
                             </InputGroup.Text>
                             </InputGroup.Prepend>
                             <Form.Control
@@ -25,12 +29,13 @@ export default class Box extends Component {
                 </Form.Row>
                     </Card.Header>
                     <Card.Body>
-                        <Card.Title>Today's weather with icons</Card.Title>
-                        <Card.Text>
-                            Humidity:
-                            Perciptition:
-                            Moisture:
-                        </Card.Text>
+                        <Card.Title>Weather in Boston</Card.Title>
+                        <Card.Text>10 deg C</Card.Text>
+                        <Card.Text><WiDayThunderstorm /> Cloudy ThunderStorm</Card.Text>
+                        <Card.Text>Humidity:</Card.Text>
+                        <Card.Text>Perciptition:</Card.Text>
+                        <Card.Text>Moisture:</Card.Text>
+                       
                         <Button variant="primary">More Details</Button>
                     </Card.Body>
                     <Card.Footer className="text-muted"></Card.Footer>
