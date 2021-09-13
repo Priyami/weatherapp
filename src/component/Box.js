@@ -1,12 +1,29 @@
 import React, { Component } from 'react';
-import { Card,Button } from 'react-bootstrap';
+import { Card,Button,Form,InputGroup, Col} from 'react-bootstrap';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import "./Box.css";
 export default class Box extends Component {
     render() {
         return (
-            <div>
-                <Card className="text-center" className="bg-dark text-white">
-                    <Card.Header>Search Box</Card.Header>
+            <div className = "box">
+                <Card  style={{ width: '25rem' }} className="bg-dark text-white text-center">
+                    <Card.Header>
+                    <Form.Row>
+                    <Form.Group as={Col}>
+                        <InputGroup>
+                            <InputGroup.Prepend>
+                                <InputGroup.Text>
+                                <FontAwesomeIcon icon="search" />           
+                            </InputGroup.Text>
+                            </InputGroup.Prepend>
+                            <Form.Control
+                                type="text"
+                                placeholder="Search here.."
+                            />
+                        </InputGroup>
+                    </Form.Group>
+                </Form.Row>
+                    </Card.Header>
                     <Card.Body>
                         <Card.Title>Today's weather with icons</Card.Title>
                         <Card.Text>

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack serve",
-    "start":"webpack-dev-server --open --hot --mode development",
+    "start": "webpack-dev-server --open --hot --mode development",
     "build": "webpack"
   },
   "repository": {
@@ -20,6 +20,10 @@
   },
   "homepage": "https://github.com/IngridFuentes/weatherapp#readme",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-regular-svg-icons": "^5.15.4",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/react-fontawesome": "^0.1.15",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.3",
     "react-dom": "^17.0.2",
