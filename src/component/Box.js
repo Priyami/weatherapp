@@ -1,32 +1,38 @@
 import React, { Component } from 'react';
-import { Card,Button,Form,InputGroup, Col} from 'react-bootstrap';
+import { Card, Button, Form, InputGroup, Col, CardGroup } from 'react-bootstrap';
 import "./Box.css";
 import { FaSearchengin } from 'react-icons/fa';
 import { WiDayThunderstorm } from "react-icons/wi";
+import Dayweather from './Dayweather';
+import { useState, useEffect } from 'react';
 
+const Box = props  => {
+    const [showDayweather, setDayweather]  = useState(true);
+        
+        const toggle = () => setDayweather(!showDayweather);
 
-export default class Box extends Component {
-    render() {
         return (
-            <div className = "box">
-                <Card  style={{ width: '25rem' }} className="bg-dark text-white text-center">
+
+            <div className="box">
+                
+                <Card style={{ width: '25rem' }} className="bg-dark text-white text-center">
                     <Card.Header>
-                    <Form.Row>
-                    <Form.Group as={Col}>
-                        <InputGroup>
-                            <InputGroup.Prepend>
-                                <InputGroup.Text> 
-                                    <FaSearchengin />
-                               
-                            </InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <Form.Control
-                                type="text"
-                                placeholder="Search here.."
-                            />
-                        </InputGroup>
-                    </Form.Group>
-                </Form.Row>
+                        <Form.Row>
+                            <Form.Group as={Col}>
+                                <InputGroup>
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text>
+                                            <FaSearchengin />
+
+                                        </InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Search here.."
+                                    />
+                                </InputGroup>
+                            </Form.Group>
+                        </Form.Row>
                     </Card.Header>
                     <Card.Body>
                         <Card.Title>Weather in Boston</Card.Title>
@@ -36,11 +42,13 @@ export default class Box extends Component {
                         <Card.Text>Perciptition:</Card.Text>
                         <Card.Text>Moisture:</Card.Text>
                        
-                        <Button variant="primary">More Details</Button>
+                   <Button  onClick= {toggle} variant="primary">More Details</Button>
                     </Card.Body>
                     <Card.Footer className="text-muted"></Card.Footer>
-                </Card>
+                </Card>    
+                {!showDayweather && <Dayweather/>}
+                
             </div>
         )
     }
-}
+export default Box;

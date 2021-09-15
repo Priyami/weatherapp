@@ -1,5 +1,7 @@
+
 .box
  {
-    background-image: yellow;
-    padding: 25px 380px 50px 350px;
+    background-image: url("/Users/karvangum/projects/weatherapp/src/images/Background.jpg") no-repeat center center;
+
+    padding: 25px 400px 50px 750px;
 }

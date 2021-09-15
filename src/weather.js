@@ -11,7 +11,7 @@ class weather extends Component {
         return (
             <div>
                 <React.Fragment>
-                    <Container>
+                   
 
                         <Row>
                             <Col>
@@ -37,7 +37,7 @@ class weather extends Component {
                         </Row>
 
 
-                    </Container>
+                   
                 </React.Fragment>
             </div>
         )
