@@ -7,7 +7,7 @@ import { TiWeatherSunny, TiWeatherWindyCloudy, TiWeatherShower } from "react-ico
 const Dayweather = () => {
     return (
         <div>
-            <Card style={{ width: '25rem' }} className="bg-dark text-white text-center">
+            <Card style={{ width: '50rem' }} className="bg-dark text-white text-center">
                 <Card.Header>
                     <Form.Row>
                         <Form.Group as={Col}>

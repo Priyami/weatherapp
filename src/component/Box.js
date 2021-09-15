@@ -5,6 +5,7 @@ import { FaSearchengin } from 'react-icons/fa';
 import { WiDayThunderstorm } from "react-icons/wi";
 import Dayweather from './Dayweather';
 import { useState, useEffect } from 'react';
+import background from "/src/images/Background.jpg";
 
 const Box = props  => {
     const [showDayweather, setDayweather]  = useState(true);
@@ -13,9 +14,9 @@ const Box = props  => {
 
         return (
 
-            <div className="box">
+            <div className="box" style={{ backgroundImage: `url(${background})` }}>
                 
-                <Card style={{ width: '25rem' }} className="bg-dark text-white text-center">
+                <Card style={{ width: '50rem' }} className="bg-dark text-white text-center">
                     <Card.Header>
                         <Form.Row>
                             <Form.Group as={Col}>
