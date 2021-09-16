@@ -6,10 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "proxy": "http://localhost:4000/",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.12"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
