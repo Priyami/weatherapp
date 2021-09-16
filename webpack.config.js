@@ -1,12 +1,31 @@
 const path = require('path');
+
+
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const dotenv = require('dotenv');
+
 
 module.exports = {
+    
+ 
   entry: path.join(__dirname, "src", "index.js"),
+ 
   output: {
     path:path.resolve(__dirname, "dist"),
   },
+ 
+
+  resolve: {
+    fallback: {
+      "os": false,
+      "path": false,
+      "fs":false
+    }
+},
+
   module: {
+    
     rules: [
       {
         test: /\.?js$/,
@@ -40,9 +59,20 @@ module.exports = {
       
     ]
   },
+  devServer: {
+    historyApiFallback: true,
+  },
+  
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "src", "index.html"),
     }),
+    new webpack.DefinePlugin({
+        'process.env': JSON.stringify(dotenv.config().parsed), // it will automatically pick up key values from .env file
+     }),
+     
   ],
+ 
 }
+
+
