@@ -2,7 +2,7 @@
 
 Setup React
  -  Setup folder with npm and git
- 
+
 mkdir my-app
 cd my-app
 npm init
@@ -47,3 +47,5 @@ npm run dev
 
 
 npm run build
+
+npm run start
