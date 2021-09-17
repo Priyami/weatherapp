@@ -3,49 +3,50 @@
 Setup React
  -  Setup folder with npm and git
 
-mkdir my-app
-cd my-app
-npm init
+$ mkdir my-app
+$ cd my-app
+$ npm init
 
 
-git init .
+$ git init .
 
-mkdir src
-cd src
+$ mkdir src
+$ cd src
 
 - Create HTML and Javascript(React) File
 
-touch index.html
-touch index.js
+$ touch index.html
+$ touch index.js
 
 Setup Webpack 
 
 - Install webpack
-npm install react react-dom
+$ npm install react react-dom
 
 
-npm install webpack webpack-cli webpack-dev-server --save-dev
+$ npm install webpack webpack-cli webpack-dev-server --save-dev
 
 - Add configuration file
-touch webpack.config.js
+$ touch webpack.config.js
 
 
-npm install html-webpack-plugin --save-dev
+$ npm install html-webpack-plugin --save-dev
 
 Setup Babel
 
 - Configure webpack to use babel
 
-npm install @babel/core babel-loader --save-dev
+$ npm install @babel/core babel-loader --save-dev
 
 
-npm install @babel/preset-env @babel/preset-react --save-dev
+$ npm install @babel/preset-env @babel/preset-react --save-dev
 
 Build and Run
 
-npm run dev
+$ npm run build
+
+Concurrently package utilized to run both server and client 
+
+$ npm run dev
 
 
-npm run build
-
-npm run start
