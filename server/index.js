@@ -2,16 +2,23 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv').config();
 const app = express()
-
+let request = require('request');
 app.use(bodyParser.json())
 
 const PORT = 4000;
+const apiURL = `https://api.weatherapi.com/v1/current.json?key=${process.env.API_KEY}&q=new%20york` 
+app.get('/', (req, res) => {
 
-app.get('/', async(req, res) => {
-    const apiURL = `https://api.weatherapi.com/v1/current.json?key=${process.env.API_KEY}&q=new%20york` 
-    const response = await fetch(apiURL)
-    const json = await response.json()
-    console.log(json);
+    
+})
+
+request(apiURL, function (err, response, body) {
+    if(err){
+      console.log('error:', error);
+    } else {
+      let weather = JSON.parse(body)
+      console.log(weather);
+    }
 })
 
 app.listen(PORT, () => {
