@@ -7,11 +7,8 @@ app.use(bodyParser.json())
 
 const PORT = 4000;
 
-app.get('/', async(req, res) => {
-    const apiURL = `https://api.weatherapi.com/v1/current.json?key=${process.env.API_KEY}&q=new%20york` 
-    const response = await fetch(apiURL)
-    const json = await response.json()
-    console.log(json);
+app.get('/', (req, res) => {
+    console.log("here I am")
 })
 
 app.listen(PORT, () => {
