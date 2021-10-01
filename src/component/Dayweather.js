@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
-import { Card, Button, Form, Col, ListGroup } from 'react-bootstrap';
-import { FaSearchengin } from 'react-icons/fa';
-import { WiDayThunderstorm } from "react-icons/wi";
+import React from 'react';
+import { Card, Form, Col, ListGroup } from 'react-bootstrap';
 import { TiWeatherSunny, TiWeatherWindyCloudy, TiWeatherShower } from "react-icons/Ti";
 
 const Dayweather = () => {

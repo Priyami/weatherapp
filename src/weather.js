@@ -26,9 +26,11 @@ class weather extends Component {
                         <Row>
 
                             <Col>
+                                
                                 <Card body>
 
                                     <Box></Box>
+                                    
                                 </Card>
 
                             </Col>
