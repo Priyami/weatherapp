@@ -3,6 +3,7 @@ import { Card, Form, Col, ListGroup } from 'react-bootstrap';
 import { TiWeatherSunny, TiWeatherWindyCloudy, TiWeatherShower } from "react-icons/Ti";
 
 const Dayweather = () => {
+
     return (
         <div>
             <Card style={{ width: '50rem' }} className="bg-dark text-white text-center">

@@ -19,8 +19,8 @@ const GetData = (data) => {
                              <Card.Text>{combinedData.temp_f} F </Card.Text>
                              <Card.Text><WiDayThunderstorm />{combinedData.text} Cloud:{combinedData.cloud}</Card.Text>
                              <Card.Text>Humidity:{combinedData.humidity}</Card.Text>
-                             <Card.Text>Perciptition:</Card.Text>
-                             <Card.Text>Moisture:</Card.Text>
+                             <Card.Text>Perciptition:{combinedData.precip_mm}</Card.Text>
+                             <Card.Text>Feels Like: {combinedData.feelslike_f}</Card.Text>
                     </Card.Body>
                 }
         </div>

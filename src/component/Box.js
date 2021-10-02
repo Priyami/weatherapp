@@ -9,7 +9,7 @@ import background from "/src/images/Background.jpg";
 import axios from 'axios';
 import GetData from './GetData';
 
-
+//Created a method useWeather - using useEffect Hooks to get the data from server 
 const useWeather = () => {
     const [weather, setWeather] = useState([]);
     useEffect(() => {
@@ -30,29 +30,17 @@ const useWeather = () => {
 }
 
 
-const toggle = () => setDayweather(!showDayweather);
-
+//Function component starts here
 const Box = props => {
-    const [showDayweather, setDayweather] = useState('');
+    const [toggle, setToggle] = useState(false) //toggle More detail button
     const weather = useWeather();
     
-  /*  useEffect(() => {
-        async function getData() {
-            const res = await axios.get('http://localhost:4000/')
-            setWeather(res.data)
-            console.log(res.data)
-            
-        }
-        getData()
-    }) */
-    
+     //response data from weatherapi - map to key object
     let data = Object.keys(weather).map((key) =>{
         console.log("example", weather[key]);
              return weather[key]
     })
-    
-    
-
+   
     return (
     
         <div className="box" style={{ backgroundImage: `url(${background})` }}>
@@ -79,9 +67,8 @@ const Box = props => {
                     
                     <GetData data = {data}></GetData>
          
-
-                <Button onClick={toggle} variant="primary">More Details</Button>
-                  
+            <Button onClick={() => setToggle(!toggle)} variant="primary">More Details</Button>
+                 {!toggle && <Dayweather></Dayweather>}
                      
              </Card>
             
