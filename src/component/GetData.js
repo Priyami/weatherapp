@@ -4,25 +4,24 @@ import { WiDayThunderstorm } from "react-icons/wi";
 
 
 const GetData = (props) => {
-    // console.log(props.data, 'data from get data comp')
-    return (
-        <div>
-            <Card.Body>
-                {props.data.map(d => (
-                         <div div key={d.key}>
-                         <Card.Title> Weather in {d.name} </Card.Title>
-                         <Card.Text>{d.temp_f} F </Card.Text>
-                         <Card.Text><WiDayThunderstorm /> Cloud:{d.cloud}</Card.Text>
-                         <Card.Text>Humidity:{d.humidity}</Card.Text>
-                         <Card.Text>Perciptition:</Card.Text>
-                         <Card.Text>Moisture:</Card.Text>
-                        </div>
-   
-                ))}
-            </Card.Body>
-        </div>
-    )
 
+    // console.log(props.data.name, 'get data')
+
+    return (
+        <> 
+            <Card.Body> 
+                             <div>
+                                 <Card.Title> Weather in {props.data.name} </Card.Title>
+                                 <Card.Text>{props.data.temp_f} F </Card.Text>
+                                 <Card.Text><WiDayThunderstorm /> Cloud:{props.data.cloud}</Card.Text>
+                                 <Card.Text>Humidity:{props.data.humidity}</Card.Text>
+                                 <Card.Text>Precipition:</Card.Text>
+                                 <Card.Text>Moisture:</Card.Text>
+                             </div> 
+   
+            </Card.Body>
+        </>
+    )
 }
 
 export default GetData;

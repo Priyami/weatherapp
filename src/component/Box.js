@@ -16,16 +16,18 @@ const Box = props => {
         async function getData() {
             const res = await axios.get('http://localhost:4000/')
             setDayweather(res.data)
-            return res
+            // return res
         }
         getData()
     }, ['http://localhost:4000/']) 
     
-    const toggle = () => setDayweather(!showDayweather);
+    // const toggle = () => setDayweather(!showDayweather);
+    console.log(showDayweather, 'initial object')
 
-    const data = Object.keys(showDayweather).map(function(key,value){
-            return showDayweather[key]
-    })
+    const concatObject = {...showDayweather.location, ...showDayweather.current}
+    console.log(concatObject, 'first object')
+    // console.log(concatObject.name, 'daaaaaaata')
+  
     return (
     
         <div className="box" style={{ backgroundImage: `url(${background})` }}>
@@ -48,11 +50,9 @@ const Box = props => {
                          </Form.Group>
                      </Form.Row>
                 </Card.Header>
-                 {/* <Card.Body> */}
-                     <GetData data={data}/>
+                     <GetData data= {concatObject}/>
 
-                <Button onClick={toggle} variant="primary">More Details</Button>
-                 {/* </Card.Body> */}
+                {/* <Button onClick={toggle} variant="primary">More Details</Button> */}
                      
                <Card.Footer className="text-muted"></Card.Footer>
              </Card>
