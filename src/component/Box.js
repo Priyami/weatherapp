@@ -9,9 +9,9 @@ import background from "/src/images/Background.jpg";
 import axios from 'axios';
 import GetData from './GetData';
 
-const Box = props => {
+//Created a method useWeather - using useEffect Hooks to get the data from server 
+const Box = () => {
     const [showDayweather, setDayweather] = useState([]);
-
     useEffect(() => {
         async function getData() {
             const res = await axios.get('http://localhost:4000/')
@@ -54,8 +54,8 @@ const Box = props => {
 
                 {/* <Button onClick={toggle} variant="primary">More Details</Button> */}
                      
-               <Card.Footer className="text-muted"></Card.Footer>
              </Card>
+            
         </div>
     )
 }
