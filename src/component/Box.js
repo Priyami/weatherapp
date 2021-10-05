@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button, Form, InputGroup, Col } from 'react-bootstrap';
+import { Card, Button, Form, InputGroup, Col, CardGroup } from 'react-bootstrap';
 import "./Box.css";
 import { FaSearchengin } from 'react-icons/fa';
 import { WiDayThunderstorm } from "react-icons/wi";
@@ -58,6 +58,5 @@ const Box = () => {
             
         </div>
     )
-
 }
 export default Box;

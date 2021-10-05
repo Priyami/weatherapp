@@ -34,8 +34,6 @@ class weather extends Component {
 
                         </Row>
 
-                        
-
 
                    
                 </React.Fragment>
