@@ -11,6 +11,7 @@ const cors = require('cors');
 const apiRouter = require('./routes/handler.js')
 
 app.use(bodyParser.json())
+<<<<<<< Updated upstream
 app.use(cors());
 
 const PORT = 4000;
@@ -32,6 +33,34 @@ app.get('/', async (req, res) => {
 		res.status(500).json({ message: err });
 	}
 })
+=======
+const router = express.Router();
+
+const PORT = 4000;
+let apiURL = `https://api.weatherapi.com/v1/current.json?key=${process.env.API_KEY}&q=new%20york` 
+
+
+router.post('/',  (req, res) =>{
+    try {
+        let city = req.city;
+        console.log(city);
+        
+    }
+    catch(error){
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })
+
+//request(apiURL, function (err, response, body) {
+//    if(err){
+//      console.log('error:', error);
+//    } else {
+//      let weather = JSON.parse(body)
+//      console.log(weather);
+//    }
+//})
+>>>>>>> Stashed changes
 
 
 
