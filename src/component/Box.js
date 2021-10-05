@@ -9,25 +9,50 @@ import background from "/src/images/Background.jpg";
 import axios from 'axios';
 import GetData from './GetData';
 
-//Created a method useWeather - using useEffect Hooks to get the data from server 
-const Box = () => {
-    const [showDayweather, setDayweather] = useState([]);
+
+const useWeather = () => {
+    const [weather, setWeather] = useState([]);
     useEffect(() => {
+        let mounted = true
+        
+        axios.get('http://localhost:4000/')
+            .then((result) => {
+                if (mounted) {
+                    setWeather(result.data)
+                    console.log(result.data)
+                }
+                
+                return () => mounted = false;
+                
+            })
+    }, [])
+    return weather
+}
+
+
+const toggle = () => setDayweather(!showDayweather);
+
+const Box = props => {
+    const [showDayweather, setDayweather] = useState('');
+    const weather = useWeather();
+    
+  /*  useEffect(() => {
         async function getData() {
             const res = await axios.get('http://localhost:4000/')
-            setDayweather(res.data)
-            // return res
+            setWeather(res.data)
+            console.log(res.data)
+            
         }
         getData()
-    }, ['http://localhost:4000/']) 
+    }) */
     
-    // const toggle = () => setDayweather(!showDayweather);
-    console.log(showDayweather, 'initial object')
+    let data = Object.keys(weather).map((key) =>{
+        console.log("example", weather[key]);
+             return weather[key]
+    })
+    
+    
 
-    const concatObject = {...showDayweather.location, ...showDayweather.current}
-    console.log(concatObject, 'first object')
-    // console.log(concatObject.name, 'daaaaaaata')
-  
     return (
     
         <div className="box" style={{ backgroundImage: `url(${background})` }}>
@@ -50,9 +75,13 @@ const Box = () => {
                          </Form.Group>
                      </Form.Row>
                 </Card.Header>
-                     <GetData data= {concatObject}/>
+                
+                    
+                    <GetData data = {data}></GetData>
+         
 
-                {/* <Button onClick={toggle} variant="primary">More Details</Button> */}
+                <Button onClick={toggle} variant="primary">More Details</Button>
+                  
                      
              </Card>
             
