@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "../../node-server"
+		},
+		{
+			"path": "../../Portfolio"
+		},
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../frontendstudygroup"
+		}
+	],
+	"settings": {}
+}
