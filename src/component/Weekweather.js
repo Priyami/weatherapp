@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Form, Col, ListGroup } from 'react-bootstrap';
 import { TiWeatherSunny, TiWeatherWindyCloudy, TiWeatherShower } from "react-icons/Ti";
 
-const Dayweather = () => {
+const Weekweather = () => {
 
     return (
         <div>
@@ -28,4 +28,4 @@ const Dayweather = () => {
         </div>
     )
 }
-export default Dayweather;
+export default Weekweather;
