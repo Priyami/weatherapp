@@ -41,10 +41,10 @@ const useWeekweather = () => {
         let mounted = true
         
         axios.get('http://localhost:4000/week')
-            .then((result) => {
+            .then((res) => {
                 if (mounted) {
-                    setWeekweather(result.data)
-                    console.log(result.data)
+                    setWeekweather(res.data)
+                    console.log(res.data)
                 }
                 
                 return () => mounted = false;
@@ -114,7 +114,7 @@ const Box = props => {
          
 
                 <Button onClick={toggle} variant="primary">More Details</Button>
-                {showMore && <Weekweather/>}
+                {showMore && <Weekweather data = {weekdata}/>}
                      
              </Card>
             
