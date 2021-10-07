@@ -38,7 +38,7 @@ http://api.weatherapi.com/v1/forecast.json?key=${process.env.API_KEY}&q=07112&da
 app.get('/week', async (req, res) => {
 	try {
 		const response = await axios({
-			url: `http://api.weatherapi.com/v1/forecast.json?key=${process.env.API_KEY}&q=boston&days=7`,
+			url: `https://api.weatherapi.com/v1/forecast.json?key=${process.env.API_KEY}&q=boston&days=7`,
 			method: "get",
 		});
 		res.status(200).json(response.data);
