@@ -85,7 +85,7 @@ const Box = props => {
     const toggle = () => setMore(!showMore);
 
     
-     const handleChange= (e) => {
+     const handleChange =  (e) => {
         e.preventDefault();
     
             if (e.target.id === "city") {
@@ -93,15 +93,24 @@ const Box = props => {
             }    
             console.log("city before axios", city);
             
-    }
-    axios.post('http://localhost:4000/city', city)
-            .then(res => {
-                console.log("City value response", res.data);
-            })
-            .catch(err => {
-                console.log("Error in Request", err);
-
-            });
+    }     
+                   
+    const handleSubmit = ()=>{
+        console.log("City onSubmit",city)
+        axios.post('http://localhost:4000/city',{'city':city})
+             .then(res => {
+                  console.log("City value response", res.data);
+              })
+              .catch(err => {
+                  console.log("Error in Request", err);
+  
+              });
+    }        
+            
+     
+    
+    
+    
     
     
 
@@ -120,6 +129,10 @@ const Box = props => {
         console.log("weather week", showWeek[key]);
         return showWeek[key]
     })
+    let listdata = Object.keys(listCity).map((key) =>{
+        console.log("weather week", listCity[key]);
+        return listCity[key]
+    })
     
 
 
@@ -129,9 +142,9 @@ const Box = props => {
              <Card style={{ width: '50rem' }} className="bg-dark text-white text-center">
                  <Card.Header>
                      <Form.Row>
-                         <Form.Group as={Col}>
+                         <Form.Group as={Col} >
                              <InputGroup>
-                                 <InputGroup.Prepend>
+                                 <InputGroup.Prepend onClick = {handleSubmit}>
                                      <InputGroup.Text>
                                         <FaSearchengin />
 
@@ -151,7 +164,7 @@ const Box = props => {
                      </Form.Row>
                 </Card.Header>
                 
-                    
+                  {listdata} 
                 <GetData data = {data}></GetData>
          
 

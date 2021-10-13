@@ -9,12 +9,16 @@ const cors = require('cors');
 // const { response } = require('express');
 // let request = require('request');
 const apiRouter = require('./routes/handler.js')
+//app.use(express.bodyParser());
+//app.use(express.urlencoded({ extended: true }));
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+app.use(bodyParser());
+
 app.use(cors());
 
 const PORT = 4000;
-var data;
+var city;
 
 // app.use("/", apiRouter);
 
@@ -50,7 +54,7 @@ app.get('/week', async (req, res) => {
 app.get('/listdata', async (req, res) => {
 	try {
 		const response = await axios({
-			url: `https://api.weatherapi.com/v1/forecast.json?key=${process.env.API_KEY}&q=${data}`,
+			url: `https://api.weatherapi.com/v1/forecast.json?key=${process.env.API_KEY}&q=${city}`,
 			method: "get",
 		});
 		res.status(200).json(response.data);
@@ -60,8 +64,12 @@ app.get('/listdata', async (req, res) => {
 	}
 })
 app.post('/city', function (request, response) {
-	data = request.body;
-	console.log("city value",data);
+	var data = request.body;
+	console.log("data to Server", data);
+	city = request.data.city;
+	console.log("city value",request.body.city);
+	
+
 })
 
 
