@@ -20,7 +20,7 @@ const useWeather = () => {
             .then((result) => {
                 if (mounted) {
                     setWeather(result.data)
-                    console.log(result.data)
+                    console.log("current weather",result.data)
                 }
                 
                 return () => mounted = false;
@@ -44,7 +44,7 @@ const useWeekweather = () => {
             .then((res) => {
                 if (mounted) {
                     setWeekweather(res.data)
-                    console.log(res.data)
+                    console.log("week weather",res.data)
                 }
                 
                 return () => mounted = false;
@@ -55,24 +55,61 @@ const useWeekweather = () => {
 
 }
 
+const useListcity = () => {
+    const [showListcity, setListcity] = useState([]);
+
+
+    useEffect(() => {
+        let mounted = true
+        
+        axios.get('http://localhost:4000/listdata')
+            .then((res) => {
+                if (mounted) {
+                    setListcity(res.data)
+                    console.log("listdata",res.data)
+                }
+                
+                return () => mounted = false;
+                
+            })
+    }, [])
+    return showListcity
+
+}
+
 const Box = props => {
 
     const [showMore, setMore] = useState('');
+    const [city, setCity] = useState('');
 
     const toggle = () => setMore(!showMore);
 
+    
+     const handleChange= (e) => {
+        e.preventDefault();
+    
+            if (e.target.id === "city") {
+                setCity(e.target.value);
+            }    
+            console.log("city before axios", city);
+            
+    }
+    axios.post('http://localhost:4000/city', city)
+            .then(res => {
+                console.log("City value response", res.data);
+            })
+            .catch(err => {
+                console.log("Error in Request", err);
+
+            });
+    
+    
+
     const weather = useWeather();
     const showWeek = useWeekweather();
+    const listCity = useListcity();
     
-  /*  useEffect(() => {
-        async function getData() {
-            const res = await axios.get('http://localhost:4000/')
-            setWeather(res.data)
-            console.log(res.data)
-            
-        }
-        getData()
-    }) */
+ 
     
     let data = Object.keys(weather).map((key) =>{
         console.log("weather location", weather[key]);
@@ -101,8 +138,13 @@ const Box = props => {
                                      </InputGroup.Text>
                                  </InputGroup.Prepend>
                                  <Form.Control
+                                     id="city"
+                                     label="city"
+                                     name="city"
+                                     value={city}
                                      type="text"
-                                     placeholder="Search here.."
+                                     placeholder="Search by city here.." 
+                                     onChange={handleChange}
                                      />
                              </InputGroup>
                          </Form.Group>
@@ -110,7 +152,7 @@ const Box = props => {
                 </Card.Header>
                 
                     
-                    <GetData data = {data}></GetData>
+                <GetData data = {data}></GetData>
          
 
                 <Button onClick={toggle} variant="primary">More Details</Button>

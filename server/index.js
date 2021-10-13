@@ -14,7 +14,7 @@ app.use(bodyParser.json())
 app.use(cors());
 
 const PORT = 4000;
-
+var data;
 
 // app.use("/", apiRouter);
 
@@ -33,7 +33,6 @@ app.get('/', async (req, res) => {
 	}
 })
 
-http://api.weatherapi.com/v1/forecast.json?key=${process.env.API_KEY}&q=07112&days=7
 
 app.get('/week', async (req, res) => {
 	try {
@@ -48,17 +47,27 @@ app.get('/week', async (req, res) => {
 	}
 })
 
+app.get('/listdata', async (req, res) => {
+	try {
+		const response = await axios({
+			url: `https://api.weatherapi.com/v1/forecast.json?key=${process.env.API_KEY}&q=${data}`,
+			method: "get",
+		});
+		res.status(200).json(response.data);
+		console.log("server",response.data);
+	} catch (err) {
+		res.status(500).json({ message: err });
+	}
+})
+app.post('/city', function (request, response) {
+	data = request.body;
+	console.log("city value",data);
+})
+
 
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 })
 
-// request(apiURL, function (err, response, body) {
-//     if(err){
-//       console.log('error:', error);
-//     } else {
-//       let weather = JSON.parse(body)
-//     //   console.log(weather);
-//     }
-// })
+
