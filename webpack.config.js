@@ -20,7 +20,8 @@ module.exports = {
     fallback: {
       "os": false,
       "path": false,
-      "fs":false
+      "fs":false,
+      "crypto":false
     }
 },
 

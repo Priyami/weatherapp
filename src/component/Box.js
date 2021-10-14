@@ -9,6 +9,7 @@ import background from "/src/images/Background.jpg";
 import axios from 'axios';
 import GetData from './GetData';
 import Weekweather from './Weekweather';
+import Listlocation from './Listlocation';
 
 
 const useWeather = () => {
@@ -55,7 +56,7 @@ const useWeekweather = () => {
 
 }
 
-const useListcity = () => {
+/*const useListcity = () => {
     const [showListcity, setListcity] = useState([]);
 
 
@@ -75,12 +76,14 @@ const useListcity = () => {
     }, [])
     return showListcity
 
-}
+}*/
 
 const Box = props => {
 
     const [showMore, setMore] = useState('');
     const [city, setCity] = useState('');
+    const [showListcity, setListcity] = useState([]);
+
 
     const toggle = () => setMore(!showMore);
 
@@ -93,21 +96,33 @@ const Box = props => {
             }    
             console.log("city before axios", city);
             
+            
     }     
                    
-    const handleSubmit = ()=>{
-        console.log("City onSubmit",city)
-        axios.post('http://localhost:4000/city',{'city':city})
-             .then(res => {
-                  console.log("City value response", res.data);
-              })
-              .catch(err => {
-                  console.log("Error in Request", err);
-  
-              });
-    }        
+          
             
-     
+    const handleSpace= (e) => {
+        if (e.keyCode === 32) 
+        {
+            axios.post('http://localhost:4000/city',{'city':city})
+            .then(res => {
+                 console.log("City value response", res.data);
+             })
+             .catch(err => {
+                 console.log("Error in Request", err);
+ 
+             });
+            axios.get('http://localhost:4000/listdata')
+            .then(res => {
+                    setListcity(res.data)
+                    console.log("listdata",res.data)
+            })
+            .catch(err => {
+                console.log("Error in response", err)
+            })
+                
+        }
+      };
     
     
     
@@ -116,7 +131,7 @@ const Box = props => {
 
     const weather = useWeather();
     const showWeek = useWeekweather();
-    const listCity = useListcity();
+    //const listCity = useListcity();
     
  
     
@@ -129,9 +144,9 @@ const Box = props => {
         console.log("weather week", showWeek[key]);
         return showWeek[key]
     })
-    let listdata = Object.keys(listCity).map((key) =>{
-        console.log("weather week", listCity[key]);
-        return listCity[key]
+    let listdata = Object.keys(showListcity).map((key) =>{
+        console.log("city list", showListcity[key]);
+        return showListcity[key]
     })
     
 
@@ -144,7 +159,7 @@ const Box = props => {
                      <Form.Row>
                          <Form.Group as={Col} >
                              <InputGroup>
-                                 <InputGroup.Prepend onClick = {handleSubmit}>
+                                 <InputGroup.Prepend >
                                      <InputGroup.Text>
                                         <FaSearchengin />
 
@@ -158,13 +173,16 @@ const Box = props => {
                                      type="text"
                                      placeholder="Search by city here.." 
                                      onChange={handleChange}
+                                     onKeyDown={handleSpace}
                                      />
                              </InputGroup>
                          </Form.Group>
+                         
+
                      </Form.Row>
+                     <Listlocation data = {listdata}></Listlocation> 
                 </Card.Header>
                 
-                  {listdata} 
                 <GetData data = {data}></GetData>
          
 
