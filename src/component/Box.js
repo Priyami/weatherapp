@@ -115,7 +115,7 @@ const Box = props => {
             axios.get('http://localhost:4000/listdata')
             .then(res => {
                     setListcity(res.data)
-                    console.log("listdata",res.data)
+                    //console.log("listdata",res.data)
             })
             .catch(err => {
                 console.log("Error in response", err)
@@ -144,10 +144,10 @@ const Box = props => {
         console.log("weather week", showWeek[key]);
         return showWeek[key]
     })
-    let listdata = Object.keys(showListcity).map((key) =>{
+    /*let listdata = Object.keys(showListcity).map((key) =>{
         console.log("city list", showListcity[key]);
         return showListcity[key]
-    })
+    })*/
     
 
 
@@ -180,7 +180,7 @@ const Box = props => {
                          
 
                      </Form.Row>
-                     <Listlocation data = {listdata}></Listlocation> 
+                     <Listlocation data = {showListcity}></Listlocation> 
                 </Card.Header>
                 
                 <GetData data = {data}></GetData>
