@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Card, Button, Form, InputGroup, Col, CardGroup } from 'react-bootstrap';
 import "./Box.css";
 import { FaSearchengin } from 'react-icons/fa';
-import { WiDayThunderstorm } from "react-icons/wi";
-import Dayweather from './Weekweather';
 import { useState, useEffect } from 'react';
 import background from "/src/images/Background.jpg";
 import axios from 'axios';
@@ -78,8 +76,8 @@ const useWeekweather = () => {
 
 }*/
 
-const Box = props => {
-
+const Box = (props) => {
+    console.log(props.handleClick(),"Box properties");
     const [showMore, setMore] = useState('');
     const [city, setCity] = useState('');
     const [showListcity, setListcity] = useState([]);
@@ -88,7 +86,7 @@ const Box = props => {
     const toggle = () => setMore(!showMore);
 
     
-     const handleChange =  (e) => {
+    const handleChange =  (e) => {
         e.preventDefault();
     
             if (e.target.id === "city") {
