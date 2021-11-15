@@ -33,6 +33,21 @@ app.get('/', async (req, res) => {
 	}
 })
 
+http://api.weatherapi.com/v1/forecast.json?key=${process.env.API_KEY}&q=07112&days=7
+
+app.get('/week', async (req, res) => {
+	try {
+		const response = await axios({
+			url: `https://api.weatherapi.com/v1/forecast.json?key=${process.env.API_KEY}&q=boston&days=7`,
+			method: "get",
+		});
+		res.status(200).json(response.data);
+		console.log("server",response.data);
+	} catch (err) {
+		res.status(500).json({ message: err });
+	}
+})
+
 
 
 app.listen(PORT, () => {

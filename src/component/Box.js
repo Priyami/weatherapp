@@ -3,11 +3,12 @@ import { Card, Button, Form, InputGroup, Col, CardGroup } from 'react-bootstrap'
 import "./Box.css";
 import { FaSearchengin } from 'react-icons/fa';
 import { WiDayThunderstorm } from "react-icons/wi";
-import Dayweather from './Dayweather';
+import Dayweather from './Weekweather';
 import { useState, useEffect } from 'react';
 import background from "/src/images/Background.jpg";
 import axios from 'axios';
 import GetData from './GetData';
+import Weekweather from './Weekweather';
 
 
 const useWeather = () => {
@@ -30,11 +31,38 @@ const useWeather = () => {
 }
 
 
-const toggle = () => setDayweather(!showDayweather);
+
+
+
+const useWeekweather = () => {
+    const [showWeekweather, setWeekweather] = useState([]);
+
+    useEffect(() => {
+        let mounted = true
+        
+        axios.get('http://localhost:4000/week')
+            .then((res) => {
+                if (mounted) {
+                    setWeekweather(res.data)
+                    console.log(res.data)
+                }
+                
+                return () => mounted = false;
+                
+            })
+    }, [])
+    return showWeekweather
+
+}
 
 const Box = props => {
-    const [showDayweather, setDayweather] = useState('');
+
+    const [showMore, setMore] = useState('');
+
+    const toggle = () => setMore(!showMore);
+
     const weather = useWeather();
+    const showWeek = useWeekweather();
     
   /*  useEffect(() => {
         async function getData() {
@@ -47,11 +75,16 @@ const Box = props => {
     }) */
     
     let data = Object.keys(weather).map((key) =>{
-        console.log("example", weather[key]);
+        console.log("weather location", weather[key]);
              return weather[key]
     })
+
+    let weekdata = Object.keys(showWeek).map((key) =>{
+        console.log("weather week", showWeek[key]);
+        return showWeek[key]
+    })
     
-    
+
 
     return (
     
@@ -81,7 +114,7 @@ const Box = props => {
          
 
                 <Button onClick={toggle} variant="primary">More Details</Button>
-                  
+                {showMore && <Weekweather data = {weekdata}/>}
                      
              </Card>
             
