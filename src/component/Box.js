@@ -53,7 +53,7 @@ const useWeekweather = () => {
 }
 
 /*const useSearchdata = () => {
-    const [showSearchdata, setSearchData] = useState([]);
+    const [showSearchData, setSearchData] = useState([]);
 
 
     useEffect(() => {
@@ -62,15 +62,15 @@ const useWeekweather = () => {
         axios.get('http://localhost:4000/search')
             .then((res) => {
                 if (mounted) {
-                    setSearchdata(res.data)
-                    console.log("listdata",res.data)
+                    setSearchData(res.data)
+                    console.log("searchdata",res.data)
                 }
                 
                 return () => mounted = false;
                 
             })
     }, [])
-    return showSearchdata
+    return showSearchData
 
 }*/
 
@@ -78,13 +78,34 @@ const Box = (props) => {
     const [showMore, setMore] = useState('');
     const [city, setCity] = useState('');
     const [showListcity, setListcity] = useState([]);
+    const [showSearchData, setSearchData] = useState([]);
 
 
     const toggle = () => setMore(!showMore);
 
+    const searchHandle = () => {
+        
+        axios.get('http://localhost:4000/search')
+        .then(res => {
+                setSearchData(res.data)
+        })
+        .catch(err => {
+            console.log("Error in response", err)
+        })
+                   
+    }
+
     const addCityHandler = city => {
         console.log(city, "in the Box");
         setCity(city);
+        axios.post('http://localhost:4000/fullcity',{'fullcityname':city})
+            .then(res => {
+                 console.log("City value response", res.data);
+             })
+             .catch(err => {
+                 console.log("Error in Request", err);
+ 
+             });
     }
 
     
@@ -123,18 +144,23 @@ const Box = (props) => {
     
     const weather = useWeather();
     const showWeek = useWeekweather();
-   
  
     
-    let data = Object.keys(weather).map((key) =>{
+    let defaultdata = Object.keys(weather).map((key) =>{
         console.log("weather location", weather[key]);
              return weather[key]
     })
 
-    let weekdata = Object.keys(showWeek).map((key) =>{
+    let weekData = Object.keys(showWeek).map((key) =>{
         console.log("weather week", showWeek[key]);
         return showWeek[key]
     })
+    let SearchData = Object.keys(showSearchData).map((key) =>{
+        console.log("weather Search", showSearchData[key]);
+        return showSearchData[key]
+    })
+    
+   
    
     
     return (
@@ -147,7 +173,7 @@ const Box = (props) => {
                              <InputGroup>
                                  <InputGroup.Prepend >
                                      <InputGroup.Text>
-                                        <FaSearchengin />
+                                        <FaSearchengin onClick = {searchHandle} />
 
                                      </InputGroup.Text>
                                  </InputGroup.Prepend>
@@ -169,11 +195,11 @@ const Box = (props) => {
                      <Listlocation data = {showListcity} city = {addCityHandler}></Listlocation> 
                 </Card.Header>
                 
-                <GetData data = {data}></GetData>
+                <GetData data = {defaultdata} data = {SearchData}></GetData>
          
 
                 <Button onClick={toggle} variant="primary">More Details</Button>
-                {showMore && <Weekweather data = {weekdata}/>}
+                {showMore && <Weekweather data = {weekData}/>}
                      
              </Card>
             
