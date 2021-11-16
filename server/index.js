@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 
 const bodyParser = require('body-parser');
-//require('dotenv').config();
+
 const axios = require('axios');
 const app = express();
 const cors = require('cors');
@@ -19,6 +19,7 @@ app.use(cors());
 
 const PORT = 4000;
 var city;
+let fullCityName;
 console.log(api_key);
 
 
@@ -71,8 +72,30 @@ app.post('/city', function (request, response) {
 		}
 	})
 	
-
 })
+app.post('/fullcity', function (request, response) {
+	var data = request.body;
+	console.log("data to Server", data);
+	 fullCityName = request.body.fullcityname;
+	
+})
+app.get('/search', async (req, res) => {
+	try {
+		const response = await axios({
+			
+
+			url: `https://api.weatherapi.com/v1/current.json?key=${api_key}&q=${fullCityName}`,
+			method: "get",
+			headers: { 'content-type': 'application/json' },
+
+		});
+		console.log("city inside search", fullCityName);
+		res.status(200).json(response.data);
+	} catch (err) {
+		res.status(500).json({ message: err });
+	}
+})
+
 
 
 
