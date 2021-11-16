@@ -122,14 +122,6 @@ const Box = (props) => {
     const handleSpace= (e) => {
         if (e.keyCode === 32) 
         {
-            axios.post('http://localhost:4000/city',{'city':city})
-            .then(res => {
-                 console.log("City value response", res.data);
-             })
-             .catch(err => {
-                 console.log("Error in Request", err);
- 
-             });
             axios.get('http://localhost:4000/listdata')
             .then(res => {
                     setListcity(res.data)
