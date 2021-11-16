@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { ListGroup } from 'react-bootstrap';
 import "./Listlocation.css";
 
@@ -10,9 +10,11 @@ const Listlocation = (data) => {
         e.preventDefault();
         setItem(e.target.innerText);
         console.log("clicked Item", e.target.innerText);
+        data.city(e.target.innerText);
+        
         
     }
-    console.log("item", item);
+    
     return (
             <div>
                 {

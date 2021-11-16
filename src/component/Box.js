@@ -9,7 +9,7 @@ import GetData from './GetData';
 import Weekweather from './Weekweather';
 import Listlocation from './Listlocation';
 
-
+//Default Weather Boston - Api from Node Server
 const useWeather = () => {
     const [weather, setWeather] = useState([]);
     useEffect(() => {
@@ -30,9 +30,7 @@ const useWeather = () => {
 }
 
 
-
-
-
+//Three Days weather on More Details Click
 const useWeekweather = () => {
     const [showWeekweather, setWeekweather] = useState([]);
 
@@ -54,17 +52,17 @@ const useWeekweather = () => {
 
 }
 
-/*const useListcity = () => {
-    const [showListcity, setListcity] = useState([]);
+/*const useSearchdata = () => {
+    const [showSearchdata, setSearchData] = useState([]);
 
 
     useEffect(() => {
         let mounted = true
         
-        axios.get('http://localhost:4000/listdata')
+        axios.get('http://localhost:4000/search')
             .then((res) => {
                 if (mounted) {
-                    setListcity(res.data)
+                    setSearchdata(res.data)
                     console.log("listdata",res.data)
                 }
                 
@@ -72,12 +70,11 @@ const useWeekweather = () => {
                 
             })
     }, [])
-    return showListcity
+    return showSearchdata
 
 }*/
 
 const Box = (props) => {
-    console.log(props.handleClick(),"Box properties");
     const [showMore, setMore] = useState('');
     const [city, setCity] = useState('');
     const [showListcity, setListcity] = useState([]);
@@ -85,20 +82,22 @@ const Box = (props) => {
 
     const toggle = () => setMore(!showMore);
 
+    const addCityHandler = city => {
+        console.log(city, "in the Box");
+        setCity(city);
+    }
+
     
     const handleChange =  (e) => {
         e.preventDefault();
-    
-            if (e.target.id === "city") {
+           
+            if (e.target.id === "city" ) {
                 setCity(e.target.value);
-            }    
-            console.log("city before axios", city);
-            
+            }       
             
     }     
                    
-          
-            
+   //List the cities when type on textbox       
     const handleSpace= (e) => {
         if (e.keyCode === 32) 
         {
@@ -113,7 +112,6 @@ const Box = (props) => {
             axios.get('http://localhost:4000/listdata')
             .then(res => {
                     setListcity(res.data)
-                    //console.log("listdata",res.data)
             })
             .catch(err => {
                 console.log("Error in response", err)
@@ -123,14 +121,9 @@ const Box = (props) => {
       };
     
     
-    
-    
-    
-
     const weather = useWeather();
     const showWeek = useWeekweather();
-    //const listCity = useListcity();
-    
+   
  
     
     let data = Object.keys(weather).map((key) =>{
@@ -142,13 +135,8 @@ const Box = (props) => {
         console.log("weather week", showWeek[key]);
         return showWeek[key]
     })
-    /*let listdata = Object.keys(showListcity).map((key) =>{
-        console.log("city list", showListcity[key]);
-        return showListcity[key]
-    })*/
+   
     
-
-
     return (
     
         <div className="box" style={{ backgroundImage: `url(${background})` }}>
@@ -178,7 +166,7 @@ const Box = (props) => {
                          
 
                      </Form.Row>
-                     <Listlocation data = {showListcity}></Listlocation> 
+                     <Listlocation data = {showListcity} city = {addCityHandler}></Listlocation> 
                 </Card.Header>
                 
                 <GetData data = {data}></GetData>
