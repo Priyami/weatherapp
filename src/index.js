@@ -7,8 +7,7 @@ import {default as weath} from './weather';
 ReactDOM.render(
     <Router>
     <Switch>
-         <Route exact path="/" component={weath} />
-        
+        <Route exact path="/" component={weath} />        
     </Switch>
     </Router>,
   document.getElementById('root')
