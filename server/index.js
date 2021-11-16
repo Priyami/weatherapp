@@ -1,35 +1,35 @@
 const express = require('express');
+const path = require('path');
+
 const bodyParser = require('body-parser');
-const dotenv = require('dotenv').config();
-// console.log(process.env.API_KEY)
+
 const axios = require('axios');
-const address = process.argv[2]; // query the place you want to know the weather from
-const app = express()
+const app = express();
 const cors = require('cors');
-// const { response } = require('express');
-// let request = require('request');
-const apiRouter = require('./routes/handler.js')
-//app.use(express.bodyParser());
-//app.use(express.urlencoded({ extended: true }));
+require('dotenv').config({path: path.join(__dirname, '.env')});
+const api_key = process.env.API_KEY;
 
 app.use(bodyParser.json());
 app.use(bodyParser());
+app.use(bodyParser.urlencoded({
+	extended: true
+  }));
 
 app.use(cors());
 
 const PORT = 4000;
 var city;
+let fullCityName;
+console.log(api_key);
 
-// app.use("/", apiRouter);
 
-if(!address) {
-    console.log('Please enter the name of the city')
-}
 app.get('/', async (req, res) => {
 	try {
 		const response = await axios({
-			url: `https://api.weatherapi.com/v1/current.json?key=${process.env.API_KEY}&q=boston`,
+			url: `https://api.weatherapi.com/v1/current.json?key=${api_key}&q=boston`,
 			method: "get",
+			headers: { 'content-type': 'application/json' },
+
 		});
 		res.status(200).json(response.data);
 	} catch (err) {
@@ -41,8 +41,10 @@ app.get('/', async (req, res) => {
 app.get('/week', async (req, res) => {
 	try {
 		const response = await axios({
-			url: `https://api.weatherapi.com/v1/forecast.json?key=${process.env.API_KEY}&q=boston&days=7`,
+			url: `https://api.weatherapi.com/v1/forecast.json?key=${api_key}&q=boston&days=7`,
 			method: "get",
+			headers: { 'content-type': 'application/json' },
+
 		});
 		res.status(200).json(response.data);
 		console.log("server",response.data);
@@ -60,7 +62,7 @@ app.post('/city', function (request, response) {
 		console.log("city inside listdata", city);
 		try {
 			const response = await axios({
-				url: `http://api.weatherapi.com/v1/search.json?key=${process.env.API_KEY}&q=${city}`,
+				url: `http://api.weatherapi.com/v1/search.json?key=${api_key}&q=${city}`,
 				method: "get",
 			});
 			res.status(200).json(response.data);
@@ -70,8 +72,30 @@ app.post('/city', function (request, response) {
 		}
 	})
 	
-
 })
+app.post('/fullcity', function (request, response) {
+	var data = request.body;
+	console.log("data to Server", data);
+	 fullCityName = request.body.fullcityname;
+	
+})
+app.get('/search', async (req, res) => {
+	try {
+		const response = await axios({
+			
+
+			url: `https://api.weatherapi.com/v1/current.json?key=${api_key}&q=${fullCityName}`,
+			method: "get",
+			headers: { 'content-type': 'application/json' },
+
+		});
+		console.log("city inside search", fullCityName);
+		res.status(200).json(response.data);
+	} catch (err) {
+		res.status(500).json({ message: err });
+	}
+})
+
 
 
 

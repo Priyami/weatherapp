@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Card, Button, Form, InputGroup, Col, CardGroup } from 'react-bootstrap';
 import "./Box.css";
 import { FaSearchengin } from 'react-icons/fa';
-import { WiDayThunderstorm } from "react-icons/wi";
-import Dayweather from './Weekweather';
 import { useState, useEffect } from 'react';
 import background from "/src/images/Background.jpg";
 import axios from 'axios';
@@ -11,7 +9,7 @@ import GetData from './GetData';
 import Weekweather from './Weekweather';
 import Listlocation from './Listlocation';
 
-
+//Default Weather Boston - Api from Node Server
 const useWeather = () => {
     const [weather, setWeather] = useState([]);
     useEffect(() => {
@@ -32,9 +30,7 @@ const useWeather = () => {
 }
 
 
-
-
-
+//Three Days weather on More Details Click
 const useWeekweather = () => {
     const [showWeekweather, setWeekweather] = useState([]);
 
@@ -56,51 +52,73 @@ const useWeekweather = () => {
 
 }
 
-/*const useListcity = () => {
-    const [showListcity, setListcity] = useState([]);
+/*const useSearchdata = () => {
+    const [showSearchData, setSearchData] = useState([]);
 
 
     useEffect(() => {
         let mounted = true
         
-        axios.get('http://localhost:4000/listdata')
+        axios.get('http://localhost:4000/search')
             .then((res) => {
                 if (mounted) {
-                    setListcity(res.data)
-                    console.log("listdata",res.data)
+                    setSearchData(res.data)
+                    console.log("searchdata",res.data)
                 }
                 
                 return () => mounted = false;
                 
             })
     }, [])
-    return showListcity
+    return showSearchData
 
 }*/
 
-const Box = props => {
-
+const Box = (props) => {
     const [showMore, setMore] = useState('');
     const [city, setCity] = useState('');
     const [showListcity, setListcity] = useState([]);
+    const [showSearchData, setSearchData] = useState([]);
 
 
     const toggle = () => setMore(!showMore);
 
+    const searchHandle = () => {
+        
+        axios.get('http://localhost:4000/search')
+        .then(res => {
+                setSearchData(res.data)
+        })
+        .catch(err => {
+            console.log("Error in response", err)
+        })
+                   
+    }
+
+    const addCityHandler = city => {
+        console.log(city, "in the Box");
+        setCity(city);
+        axios.post('http://localhost:4000/fullcity',{'fullcityname':city})
+            .then(res => {
+                 console.log("City value response", res.data);
+             })
+             .catch(err => {
+                 console.log("Error in Request", err);
+ 
+             });
+    }
+
     
-     const handleChange =  (e) => {
+    const handleChange =  (e) => {
         e.preventDefault();
-    
-            if (e.target.id === "city") {
+           
+            if (e.target.id === "city" ) {
                 setCity(e.target.value);
-            }    
-            console.log("city before axios", city);
-            
+            }       
             
     }     
                    
-          
-            
+   //List the cities when type on textbox       
     const handleSpace= (e) => {
         if (e.keyCode === 32) 
         {
@@ -115,7 +133,6 @@ const Box = props => {
             axios.get('http://localhost:4000/listdata')
             .then(res => {
                     setListcity(res.data)
-                    //console.log("listdata",res.data)
             })
             .catch(err => {
                 console.log("Error in response", err)
@@ -125,32 +142,27 @@ const Box = props => {
       };
     
     
-    
-    
-    
-
     const weather = useWeather();
     const showWeek = useWeekweather();
-    //const listCity = useListcity();
-    
  
     
-    let data = Object.keys(weather).map((key) =>{
+    let defaultdata = Object.keys(weather).map((key) =>{
         console.log("weather location", weather[key]);
              return weather[key]
     })
 
-    let weekdata = Object.keys(showWeek).map((key) =>{
+    let weekData = Object.keys(showWeek).map((key) =>{
         console.log("weather week", showWeek[key]);
         return showWeek[key]
     })
-    /*let listdata = Object.keys(showListcity).map((key) =>{
-        console.log("city list", showListcity[key]);
-        return showListcity[key]
-    })*/
+    let SearchData = Object.keys(showSearchData).map((key) =>{
+        console.log("weather Search", showSearchData[key]);
+        return showSearchData[key]
+    })
     
-
-
+   
+   
+    
     return (
     
         <div className="box" style={{ backgroundImage: `url(${background})` }}>
@@ -161,7 +173,7 @@ const Box = props => {
                              <InputGroup>
                                  <InputGroup.Prepend >
                                      <InputGroup.Text>
-                                        <FaSearchengin />
+                                        <FaSearchengin onClick = {searchHandle} />
 
                                      </InputGroup.Text>
                                  </InputGroup.Prepend>
@@ -180,14 +192,14 @@ const Box = props => {
                          
 
                      </Form.Row>
-                     <Listlocation data = {showListcity}></Listlocation> 
+                     <Listlocation data = {showListcity} city = {addCityHandler}></Listlocation> 
                 </Card.Header>
                 
-                <GetData data = {data}></GetData>
+                <GetData data = {defaultdata} data = {SearchData}></GetData>
          
 
                 <Button onClick={toggle} variant="primary">More Details</Button>
-                {showMore && <Weekweather data = {weekdata}/>}
+                {showMore && <Weekweather data = {weekData}/>}
                      
              </Card>
             
