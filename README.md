@@ -49,4 +49,7 @@ Concurrently package utilized to run both server and client
 
 $ npm run dev
 
+- Pick a city from list of cities
+- Search weather details via REST API (backend node) and Data retrieved from https://www.weatherapi.com/
+- React/react-bootstrap(frontend) 
 
