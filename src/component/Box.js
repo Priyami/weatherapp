@@ -83,24 +83,16 @@ const Box = (props) => {
 
     const toggle = () => setMore(!showMore);
 
-    const searchHandle = () => {
-        
-        axios.get('http://localhost:4000/search')
-        .then(res => {
-                setSearchData(res.data)
-        })
-        .catch(err => {
-            console.log("Error in response", err)
-        })
-                   
-    }
+    
 
     const addCityHandler = city => {
         console.log(city, "in the Box");
-        setCity(city);
-        axios.post('http://localhost:4000/fullcity',{'fullcityname':city})
+        
+        axios.post('http://localhost:4000/fullcitysearch',{'fullcityname':city})
             .then(res => {
                  console.log("City value response", res.data);
+                 setSearchData(res.data)
+                 setCity(city);
              })
              .catch(err => {
                  console.log("Error in Request", err);
@@ -165,7 +157,7 @@ const Box = (props) => {
                              <InputGroup>
                                  <InputGroup.Prepend >
                                      <InputGroup.Text>
-                                        <FaSearchengin onClick = {searchHandle} />
+                                        <FaSearchengin onClick = {addCityHandler} />
 
                                      </InputGroup.Text>
                                  </InputGroup.Prepend>

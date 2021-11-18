@@ -18,7 +18,6 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 
 const PORT = 4000;
-let fullCityName;
 console.log(api_key);
 
 
@@ -66,20 +65,13 @@ app.post('/listdata', async (req, res) => {
 	}
 });
 
-app.post('/fullcity', function (request, response) {
-	var data = request.body;
-	console.log("data to Server", data);
-	 fullCityName = request.body.fullcityname;
+app.post('/fullcitysearch', async (req, res) => {
 	
-})
-app.get('/search', async (req, res) => {
-	try {
+	 const fullCityName = req.body.fullcityname;
+	 try {
 		const response = await axios({
-			
-
 			url: `https://api.weatherapi.com/v1/current.json?key=${api_key}&q=${fullCityName}`,
 			method: "get",
-			headers: { 'content-type': 'application/json' },
 
 		});
 		console.log("city inside search", fullCityName);
@@ -87,8 +79,8 @@ app.get('/search', async (req, res) => {
 	} catch (err) {
 		res.status(500).json({ message: err });
 	}
-})
-
+	
+});
 
 
 
