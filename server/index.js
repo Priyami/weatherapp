@@ -18,7 +18,6 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 
 const PORT = 4000;
-var city;
 let fullCityName;
 console.log(api_key);
 
@@ -51,28 +50,22 @@ app.get('/week', async (req, res) => {
 	} catch (err) {
 		res.status(500).json({ message: err });
 	}
-})
+});
 
-app.post('/city', function (request, response) {
-	var data = request.body;
-	console.log("data to Server", data);
-	 city = request.body.city;
-	console.log("city value",request.body.city);
-	app.get('/listdata', async (req, res) => {
-		console.log("city inside listdata", city);
-		try {
-			const response = await axios({
-				url: `http://api.weatherapi.com/v1/search.json?key=${api_key}&q=${city}`,
-				method: "get",
-			});
-			res.status(200).json(response.data);
-			console.log("server",response.data);
-		} catch (err) {
-			res.status(500).json({ message: err });
-		}
-	})
-	
-})
+app.post('/listdata', async (req, res) => {
+	try {
+		const  city  = req.body.city;
+		const response = await axios({
+			url: `http://api.weatherapi.com/v1/search.json?key=${api_key}&q=${city}`,
+			method: "get",
+		});
+		res.status(200).json(response.data);
+		console.log("server",response.data);
+	} catch (err) {
+		res.status(500).json({ message: err });
+	}
+});
+
 app.post('/fullcity', function (request, response) {
 	var data = request.body;
 	console.log("data to Server", data);
