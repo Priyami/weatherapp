@@ -9,25 +9,6 @@ import GetData from './GetData';
 import Weekweather from './Weekweather';
 import Listlocation from './Listlocation';
 
-//Default Weather Boston - Api from Node Server
-const useWeather = () => {
-    const [weather, setWeather] = useState([]);
-    useEffect(() => {
-        let mounted = true
-        
-        axios.get('http://localhost:4000/')
-            .then((result) => {
-                if (mounted) {
-                    setWeather(result.data)
-                    console.log("current weather",result.data)
-                }
-                
-                return () => mounted = false;
-                
-            })
-    }, [])
-    return weather
-}
 
 
 //Three Days weather on More Details Click
@@ -52,52 +33,46 @@ const useWeekweather = () => {
 
 }
 
-/*const useSearchdata = () => {
-    const [showSearchData, setSearchData] = useState([]);
 
+
+const Box = (props) => {
+    const [showMore, setMore] = useState('');
+    const [city, setCity] = useState('');
+    const [showListcity, setListcity] = useState([]);
+    const [showWeather, setWeather] = useState([]);
+
+
+    const toggle = () => setMore(!showMore);
+   
+    //Default Weather Boston - Api from Node Server
 
     useEffect(() => {
         let mounted = true
         
-        axios.get('http://localhost:4000/search')
-            .then((res) => {
+        axios.get('http://localhost:4000/')
+            .then((result) => {
                 if (mounted) {
-                    setSearchData(res.data)
-                    console.log("searchdata",res.data)
+                    setWeather(result.data)
+                    console.log("current weather",result.data)
                 }
                 
                 return () => mounted = false;
                 
             })
     }, [])
-    return showSearchData
-
-}*/
-
-const Box = (props) => {
-    const [showMore, setMore] = useState('');
-    const [city, setCity] = useState('');
-    const [showListcity, setListcity] = useState([]);
-    const [showSearchData, setSearchData] = useState([]);
-
-
-    const toggle = () => setMore(!showMore);
-
-    
-
-    const addCityHandler = city => {
-        console.log(city, "in the Box");
+    const addCityHandler = () => {
         
         axios.post('http://localhost:4000/fullcitysearch',{'fullcityname':city})
             .then(res => {
                  console.log("City value response", res.data);
-                 setSearchData(res.data)
-                 setCity(city);
+                 setWeather(res.data)
+                 
              })
              .catch(err => {
                  console.log("Error in Request", err);
  
              });
+             
     }
 
     
@@ -126,28 +101,19 @@ const Box = (props) => {
       };
     
     
-    const weather = useWeather();
     const showWeek = useWeekweather();
  
-    
-    let defaultdata = Object.keys(weather).map((key) =>{
-        console.log("weather location", weather[key]);
-             return weather[key]
-    })
-
     let weekData = Object.keys(showWeek).map((key) =>{
         console.log("weather week", showWeek[key]);
         return showWeek[key]
     })
-    let SearchData = Object.keys(showSearchData).map((key) =>{
-        console.log("weather Search", showSearchData[key]);
-        return showSearchData[key]
+    let weatherData = Object.keys(showWeather).map((key) =>{
+        console.log("weather Data", showWeather[key]);
+        return showWeather[key]
     })
     
-   
-   
     
-    return (
+   return (
     
         <div className="box" style={{ backgroundImage: `url(${background})` }}>
              <Card style={{ width: '50rem' }} className="bg-dark text-white text-center">
@@ -176,10 +142,10 @@ const Box = (props) => {
                          
 
                      </Form.Row>
-                     <Listlocation data = {showListcity} city = {addCityHandler}></Listlocation> 
+                     <Listlocation data = {showListcity} city = {(city)=> setCity(city)}></Listlocation> 
                 </Card.Header>
                 
-                <GetData data = {defaultdata} data = {SearchData}></GetData>
+                <GetData data = {weatherData} ></GetData>
          
 
                 <Button onClick={toggle} variant="primary">More Details</Button>
