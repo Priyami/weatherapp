@@ -19,135 +19,142 @@ const Box = (props) => {
     const [showWeekWeather, setWeekWeather] = useState([]);
 
     const toggle = () => setMore(!showMore);
-        
 
-    const handleChange =  (e) => {
+
+    const handleChange = (e) => {
         e.preventDefault();
-           
-            if (e.target.id === "city" ) {
-                setCity(e.target.value);
-            }       
-            
-    }  
-    
-       //Three Days weather on More Details Click (Default Boston weather details onMount)
+
+        if (e.target.id === "city") {
+            setCity(e.target.value);
+        }
+
+    }
+
+    //Three Days weather on More Details Click (Default Boston weather details onMount)
 
     useEffect(() => {
         let mounted = true
-       
-    axios.post('http://localhost:4000/week', {'cityname': city})
+
+        axios.post('http://localhost:4000/week', { 'cityname': city })
             .then((res) => {
-                if (mounted) { 
-                setWeekWeather(res.data)
-                console.log("week weather",res.data)
+                if (mounted) {
+                    setWeekWeather(res.data)
+                    console.log("week weather", res.data)
                 }
                 return () => mounted = false;
-             })
-             
+            })
+
     }, [])
     //Default Weather Boston - Api from Node Server
 
     useEffect(() => {
         let mounted = true
-        
+
         axios.get('http://localhost:4000/')
             .then((result) => {
                 if (mounted) {
                     setWeather(result.data)
                 }
-                
+
                 return () => mounted = false;
-                
+
             })
     }, [])
     const addCityHandler = () => {
         //Weather Data as per the Cityname in inputfield
-        axios.post('http://localhost:4000/fullcitysearch',{'fullcityname':city})
+        axios.post('http://localhost:4000/fullcitysearch', { 'fullcityname': city })
             .then(res => {
-                 setWeather(res.data)
-                 
-             })
-             .catch(err => {
-                 console.log("Error in Request", err);
- 
-             });
-        //Three Days weather on More Details Click      
-        axios.post('http://localhost:4000/week',{'cityname':city})
-             .then(res => {
-                  setWeekWeather(res.data)
-                  
-              })
-              .catch(err => {
-                  console.log("Error in Request", err);
-  
-              });
-              
-    }
-    
-//List the cities when type on textbox       
-    const handleSpace= (e) => {
-        if (e.keyCode === 32) 
-        {
-            axios.post('http://localhost:4000/listdata',{'city': city})
-            .then(res => {
-                    setListcity(res.data)
+                setWeather(res.data)
+
             })
             .catch(err => {
-                console.log("Error in response", err)
+                console.log("Error in Request", err);
+
+            });
+        //Three Days weather on More Details Click      
+        axios.post('http://localhost:4000/week', { 'cityname': city })
+            .then(res => {
+                setWeekWeather(res.data)
+
             })
-                
+            .catch(err => {
+                console.log("Error in Request", err);
+
+            });
+
+    }
+
+    //List the cities when type on textbox       
+    const handleSpace = (e) => {
+        if (e.keyCode === 32) {
+            axios.post('http://localhost:4000/listdata', { 'city': city })
+                .then(res => {
+                    setListcity(res.data)
+                })
+                .catch(err => {
+                    console.log("Error in response", err)
+                })
+
         }
-      };
-    
- 
-    let weekData = Object.keys(showWeekWeather).map((key) =>{
+    };
+
+
+    let weekData = Object.keys(showWeekWeather).map((key) => {
         console.log("weather week", showWeekWeather[key]);
         return showWeekWeather[key]
     })
-    let weatherData = Object.keys(showWeather).map((key) =>{
+    let weatherData = Object.keys(showWeather).map((key) => {
         return showWeather[key]
     })
-    
-    
-   return (
-    
+
+
+    return (
+
         <div className="box" style={{ backgroundImage: `url(${background})` }}>
-             <Card style={{ width: '50rem' }} className="bg-dark text-white text-center">
-                 <Card.Header>
-                     <Form.Row>
-                         <Form.Group as={Col} >
-                             <InputGroup>
-                                 <InputGroup.Prepend >
-                                     <InputGroup.Text>
-                                        <FaSearchengin onClick = {addCityHandler}  />
+            <Card style={{ width: '50rem' }} className="bg-dark text-white text-center">
+                <Card.Header>
+                    <Form.Row>
+                        <Form.Group as={Col} >
+                            <InputGroup>
+                                <InputGroup.Prepend onClick={addCityHandler} >
+                                    <InputGroup.Text id="search-btn">
+                                        <FaSearchengin />
+                                    </InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <Form.Control
+                                    id="city"
+                                    label="city"
+                                    name="city"
+                                    value={city}
+                                    type="text"
+                                    placeholder="Search by city here.."
+                                    onChange={handleChange}
+                                    onKeyDown={handleSpace}
+                                />
+                            </InputGroup>
+                        </Form.Group>
 
-                                     </InputGroup.Text>
-                                 </InputGroup.Prepend>
-                                 <Form.Control
-                                     id="city"
-                                     label="city"
-                                     name="city"
-                                     value={city}
-                                     type="text"
-                                     placeholder="Search by city here.." 
-                                     onChange={handleChange}
-                                     onKeyDown={handleSpace}
-                                     />
-                             </InputGroup>
-                         </Form.Group>
-                         
 
-                     </Form.Row>
-                     <Listlocation data = {showListcity} city = {(city)=> setCity(city)}></Listlocation> 
+                    </Form.Row>
+                    <Listlocation data={showListcity} city={(city) => setCity(city)}></Listlocation>
                 </Card.Header>
-                
-                <GetData data = {weatherData} ></GetData>
-                <Button variant = "primary" onClick = {toggle} >More Details</Button>
-                {showMore && <Weekweather data = {weekData}></Weekweather>}
-                     
-             </Card>
-            
+
+                <GetData data={weatherData} ></GetData>
+                <Button variant="primary" onClick={toggle} >More Details</Button>
+                {showMore && <Weekweather data={weekData}></Weekweather>}
+
+            </Card>
+
         </div>
     )
 }
 export default Box;
+
+
+
+
+
+
+
+
+

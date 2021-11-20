@@ -1,5 +1,16 @@
 
 .box
- {
-    padding: 25px 400px 50px 550px;
+{
+   padding: 25px 400px 50px 550px;
 }
+
+#search-btn:hover { 
+   cursor: pointer;
+   background-color: #FFA07A;
+}
+
+#search-btn:active {   
+   background-color: #E9967A;
+   transform: scale(0.98);
+}
+
