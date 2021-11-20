@@ -36,16 +36,16 @@ app.get('/', async (req, res) => {
 })
 
 
-app.get('/week', async (req, res) => {
+app.post('/week', async (req, res) => {
 	try {
+		const cityName = req.body.cityname;
+		console.log("week" + cityName);
 		const response = await axios({
-			url: `https://api.weatherapi.com/v1/forecast.json?key=${api_key}&q=boston&days=7`,
+			url: `https://api.weatherapi.com/v1/forecast.json?key=${api_key}&q=${cityName}&days=7`,
 			method: "get",
 			headers: { 'content-type': 'application/json' },
-
 		});
-		res.status(200).json(response.data);
-		console.log("server",response.data);
+		 res.status(200).json(response.data);
 	} catch (err) {
 		res.status(500).json({ message: err });
 	}
@@ -59,7 +59,6 @@ app.post('/listdata', async (req, res) => {
 			method: "get",
 		});
 		res.status(200).json(response.data);
-		console.log("server",response.data);
 	} catch (err) {
 		res.status(500).json({ message: err });
 	}
@@ -74,7 +73,6 @@ app.post('/fullcitysearch', async (req, res) => {
 			method: "get",
 
 		});
-		console.log("city inside search", fullCityName);
 		res.status(200).json(response.data);
 	} catch (err) {
 		res.status(500).json({ message: err });
