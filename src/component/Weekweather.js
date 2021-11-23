@@ -1,23 +1,13 @@
 import React from 'react';
 import { Card, Form, Col, ListGroup } from 'react-bootstrap';
+import moment from 'moment'
 
 const Weekweather = (props) => {
     var combinedData = {...props.data[0], ...props.data[1], ...props.data[2]}
     var forecast = combinedData.forecastday;
     
-    var list = [ "Sun", "Mon", "Tue", "Wed","Thur", "Fri", "Sat"];
-
-    console.log("three dates",forecast);
-    console.log("first date", forecast[0].date);
     function dayDate(date){
-        console.log("inside function",date);
-        var d = new Date(date);
-        console.log(d);
-        var n = d.getDay(); 
-        console.log(n);
-        console.log(list[n+1]);
-        return list[n+1];
-     
+        return new moment(date).format('dddd')
     }
     return (
         <div>
