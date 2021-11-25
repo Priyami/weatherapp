@@ -8,6 +8,7 @@ import axios from 'axios';
 import GetData from './GetData';
 import Weekweather from './Weekweather';
 import Listlocation from './Listlocation';
+import Metric from './Metric';
 
 
 
@@ -17,9 +18,11 @@ const Box = (props) => {
     const [showListcity, setListcity] = useState([]);
     const [showWeather, setWeather] = useState([]);
     const [showWeekWeather, setWeekWeather] = useState([]);
+    const [degree, setDegree] = useState('Farenheit');
 
     const toggle = () => setMore(!showMore);
 
+    
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -131,15 +134,18 @@ const Box = (props) => {
                                     onChange={handleChange}
                                     onKeyDown={handleSpace}
                                 />
-                            </InputGroup>
+                             </InputGroup>
+
+                            
                         </Form.Group>
+                        <Form.Group > <Metric degree={(degree) => setDegree(degree)} ></Metric></Form.Group>
 
 
                     </Form.Row>
                     <Listlocation data={showListcity} city={(city) => setCity(city)}></Listlocation>
                 </Card.Header>
 
-                <GetData data={weatherData} ></GetData>
+                <GetData data={weatherData} degree = {degree} ></GetData>
                 <Button variant="primary" onClick={toggle} >More Details</Button>
                 {showMore && <Weekweather data={weekData}></Weekweather>}
 
