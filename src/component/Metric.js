@@ -1,31 +1,30 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, Form, Row } from 'react-bootstrap';
 
 const Metric = (props) => {
-
+   
+    const handleDegree =(e) => {
+        props.degree(e.target.value);
+    }
     return (
         <div>
-            <Card.Body >
-                <Card.Text>
+            <form>
                     <input
                         type="radio"
-                        value="farenheit radio"
+                        value="Farenheit"
                         name="metricRadios"
-                        id="farenheitRadios"
-                    />
-                    { }<label for="farenheit">Farenheit</label>
-
-                </Card.Text>
-                <Card.Text>
+                        id="metricRadiosF"
+                        onClick = {handleDegree}
+                        defaultChecked
+                    />F<br></br>
                     <input
                         type="radio"
-                        value="celcius radio"
+                        value="Celcius"
                         name="metricRadios"
-                        id="celciusRadios"
-                    />
-                    { }<label for="celcius">Celcius</label>
-                </Card.Text>
-            </Card.Body>
+                        id="metricRadiosC"
+                        onClick = {handleDegree}
+                    />C<br></br>     
+                </form>
         </div>
     )
 
