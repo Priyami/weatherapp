@@ -1,31 +1,32 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ListGroup } from 'react-bootstrap';
 import "./Listlocation.css";
-
 const Listlocation = (data) => {
-    const [item, setItem] = useState('');
-    console.log(data.data,"Listlocation")
-    
+    const [item, setItem] = useState(true);
+
+    console.log(data.data, "Listlocation")
+    console.log(item, "itemClicked")
+
     const handleClick = (e) => {
+        setItem(!item);
         e.preventDefault();
-        setItem(e.target.innerText);
-        console.log("clicked Item", e.target.innerText);
         data.city(e.target.innerText);
-        
-        
+
     }
-    
+
     return (
-            <div>
-                {
-                    data.data.map(location =>
-                    <ListGroup variant="dark" key={location.id}>
-                        <ListGroup.Item  onClick={handleClick}>{location.name}</ListGroup.Item>     
-                   </ListGroup>
-                     )       
-                              
-                }
+        <div>
+             {
+                data.data.map(location =>
+                    <ListGroup variant="dark" key={location.id} >
+                        {item && <ListGroup.Item onClick={handleClick} >{location.name}</ListGroup.Item>}
+                    </ListGroup>
+
+                )
+
+            }
         </div>
+
     )
 
 }
