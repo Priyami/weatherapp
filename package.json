@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "webpack-dev-server --open --hot --mode development",
     "server": "node server/index.js",
-    "start": "npm run client",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
     "build": "webpack --mode production",
     "heroku-prebuild": "npm install --dev",
     "predeploy": "npm run build",
