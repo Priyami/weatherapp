@@ -7,8 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "webpack-dev-server --open --hot --mode development",
-    "start": "node server/index.js",
-    "dev": "concurrently \"npm run start\" \"npm run client\"",
+    "server": "node server/index.js",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
     "build": "webpack --mode production",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
