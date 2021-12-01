@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(cors());
 
-const PORT = 4000;
+const PORT = process.env.PORT || 3002
 console.log(api_key);
 
 
