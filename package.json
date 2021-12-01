@@ -6,10 +6,12 @@
   "proxy": "http://localhost:4000",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "client": "webpack-dev-server --open --hot --mode production",
+    "client": "webpack-dev-server --open --hot --mode development",
     "server": "node server/index.js",
-    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "node server/index.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "build": "webpack --mode production",
+    "start-all": "npm run build && node server/index.js",
     "heroku-prebuild": "npm install --dev",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
