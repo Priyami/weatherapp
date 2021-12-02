@@ -9,6 +9,12 @@ const cors = require('cors');
 require('dotenv').config({path: path.join(__dirname, '.env')});
 const api_key = process.env.API_KEY;
 
+app.set("views", path.join(__dirname, "/src/component"));
+// set jade as view engine. 
+app.set("view engine", "jade");
+
+// public route will be used to server the static content
+app.use("/src", express.static("public"));
 app.use(bodyParser.json());
 app.use(bodyParser());
 app.use(bodyParser.urlencoded({
@@ -18,7 +24,7 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 
 const PORT = process.env.PORT || 4000
-console.log(api_key);
+
 
 
 app.get('/api', async (req, res) => {
