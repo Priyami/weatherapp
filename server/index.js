@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 4000
 console.log(api_key);
 
 
-app.get('/', async (req, res) => {
+app.get('/api', async (req, res) => {
 	try {
 		const response = await axios({
 			url: `https://api.weatherapi.com/v1/current.json?key=${api_key}&q=boston`,
