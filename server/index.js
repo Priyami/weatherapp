@@ -8,7 +8,7 @@ const app = express();
 const cors = require('cors');
 require('dotenv').config({path: path.join(__dirname, '.env')});
 const api_key = process.env.API_KEY;
-const buildPath = path.join(__dirname, '..', 'build');
+const buildPath = path.join(__dirname, '..', 'dist');
 app.use(express.static(buildPath));
 
 app.use(bodyParser.json());
