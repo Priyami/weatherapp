@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "webpack for React",
   "main": "index.js",
-  "proxy": "http://localhost:4000",
+  "proxy": "https://weather-framework.herokuapp.com/",
   "scripts": {
     "start": "node server/index.js",
     "build": "webpack --env production ",
@@ -18,6 +18,10 @@
     "type": "git",
     "url": "git+https://github.com/Priyami/weatherapp.git"
   },
+  "engines": {
+    "node": "14.x",
+    "npm": "6.14.7"
+ },
   "author": "Priya",
   "license": "ISC",
   "bugs": {
