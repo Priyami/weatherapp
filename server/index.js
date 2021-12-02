@@ -36,7 +36,7 @@ app.get('/api', async (req, res) => {
 })
 
 
-app.post('/week', async (req, res) => {
+app.post('/api/week', async (req, res) => {
 	try {
 		const cityName = req.body.cityname;
 		console.log("week" + cityName);
@@ -51,7 +51,7 @@ app.post('/week', async (req, res) => {
 	}
 });
 
-app.post('/listdata', async (req, res) => {
+app.post('/api/listdata', async (req, res) => {
 	try {
 		const  city  = req.body.city;
 		const response = await axios({
@@ -64,7 +64,7 @@ app.post('/listdata', async (req, res) => {
 	}
 });
 
-app.post('/fullcitysearch', async (req, res) => {
+app.post('/api/fullcitysearch', async (req, res) => {
 	
 	 const fullCityName = req.body.fullcityname;
 	 try {
