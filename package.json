@@ -7,17 +7,12 @@
   "scripts": {
     "start": "node server/index.js",
     "build": "webpack --env production ",
-    "install":"npm install && npm run build",
-    "client": "PORT=3000 webpack-dev-server --open --hot --mode development",
-    "client-prod": "PORT=3001 webpack-dev-server",
+    "client": "PORT=3000 webpack-dev-server --open --hot --mode development && npm start",
     "server": "nodemon server/index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "prod": "concurrently \"npm run server\" \"npm run client-prod\"",
     "heroku-prebuild": "npm install --dev",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
-    "postinstall": "npm run webpack",
-    "webpack": "webpack"
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
