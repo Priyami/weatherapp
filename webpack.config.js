@@ -7,9 +7,9 @@ const dotenv = require('dotenv');
 
 
 module.exports = {
-  mode: 'production',
+    
  
-  entry: path.join(__dirname, "src", "../src/index.js"),
+  entry: path.join(__dirname, "src", "index.js"),
  
   output: {
     path:path.resolve(__dirname, "dist"),

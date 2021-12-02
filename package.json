@@ -6,12 +6,11 @@
   "proxy": "https://weather-framework.herokuapp.com/",
   "scripts": {
     
-    "build": "webpack --env production ",
+    "build": "webpack",
     "client": "webpack-dev-server --open --hot --mode development",
     "server": "node server/index.js",
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-prebuild": "npm install --dev",
-    "postinstall": "if-env NODE_ENV=production && npm run build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
