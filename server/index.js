@@ -9,7 +9,7 @@ const cors = require('cors');
 require('dotenv').config({path: path.join(__dirname, '.env')});
 const api_key = process.env.API_KEY;
 
-app.set("views", path.join(__dirname, "/src/component"));
+app.set("views", path.join(__dirname, "/src"));
 // set jade as view engine. 
 app.set("view engine", "jade");
 
