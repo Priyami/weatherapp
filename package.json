@@ -8,7 +8,7 @@
     
     "build": "webpack --env production ",
     "client": "webpack-dev-server --open --hot --mode development",
-    "server": "nodemon server/index.js",
+    "server": "node server/index.js",
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-prebuild": "npm install --dev",
     "predeploy": "npm run build",
