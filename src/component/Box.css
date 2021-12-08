@@ -1,7 +1,8 @@
 
 .box
 {
-   padding: 25px 400px 50px 550px;
+   display: flex;
+   justify-content: center;
 }
 
 #search-btn:hover { 
