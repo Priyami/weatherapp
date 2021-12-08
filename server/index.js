@@ -8,6 +8,8 @@ const app = express();
 const cors = require('cors');
 require('dotenv').config({path: path.join(__dirname, '.env')});
 const api_key = process.env.API_KEY;
+const buildPath = path.join(__dirname, '..', 'dist');
+app.use(express.static(buildPath));
 
 app.use(bodyParser.json());
 app.use(bodyParser());
@@ -17,11 +19,11 @@ app.use(bodyParser.urlencoded({
 
 app.use(cors());
 
-const PORT = 4000;
-console.log(api_key);
+const PORT = process.env.PORT || 4000
 
 
-app.get('/', async (req, res) => {
+
+app.get('/api', async (req, res) => {
 	try {
 		const response = await axios({
 			url: `https://api.weatherapi.com/v1/current.json?key=${api_key}&q=boston`,
@@ -36,7 +38,7 @@ app.get('/', async (req, res) => {
 })
 
 
-app.post('/week', async (req, res) => {
+app.post('/api/week', async (req, res) => {
 	try {
 		const cityName = req.body.cityname;
 		console.log("week" + cityName);
@@ -51,7 +53,7 @@ app.post('/week', async (req, res) => {
 	}
 });
 
-app.post('/listdata', async (req, res) => {
+app.post('/api/listdata', async (req, res) => {
 	try {
 		const  city  = req.body.city;
 		const response = await axios({
@@ -64,7 +66,7 @@ app.post('/listdata', async (req, res) => {
 	}
 });
 
-app.post('/fullcitysearch', async (req, res) => {
+app.post('/api/fullcitysearch', async (req, res) => {
 	
 	 const fullCityName = req.body.fullcityname;
 	 try {

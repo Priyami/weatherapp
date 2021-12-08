@@ -39,7 +39,7 @@ const Box = (props) => {
     useEffect(() => {
         let mounted = true
 
-        axios.post('http://localhost:4000/week', { 'cityname': city })
+        axios.post('https://weather-framework.herokuapp.com/api/week', { 'cityname': city })
             .then((res) => {
                 if (mounted) {
                     setWeekWeather(res.data)
@@ -54,7 +54,7 @@ const Box = (props) => {
     useEffect(() => {
         let mounted = true
 
-        axios.get('http://localhost:4000/')
+        axios.get('https://weather-framework.herokuapp.com/api')
             .then((result) => {
                 if (mounted) {
                     setWeather(result.data)
@@ -66,7 +66,7 @@ const Box = (props) => {
     }, [])
     const addCityHandler = () => {
         //Weather Data as per the Cityname in inputfield
-        axios.post('http://localhost:4000/fullcitysearch', { 'fullcityname': city })
+        axios.post('https://weather-framework.herokuapp.com/api/fullcitysearch', { 'fullcityname': city })
             .then(res => {
                 setWeather(res.data)
 
@@ -76,7 +76,7 @@ const Box = (props) => {
 
             });
         //Three Days weather on More Details Click      
-        axios.post('http://localhost:4000/week', { 'cityname': city })
+        axios.post('https://weather-framework.herokuapp.com/api/week', { 'cityname': city })
             .then(res => {
                 setWeekWeather(res.data)
 
