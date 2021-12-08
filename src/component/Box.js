@@ -121,11 +121,7 @@ const Box = (props) => {
                     <Form.Row>
                         <Form.Group as={Col} >
                             <InputGroup>
-                                <InputGroup.Prepend onClick={addCityHandler} >
-                                    <InputGroup.Text id="search-btn">
-                                        <FaSearchengin />
-                                    </InputGroup.Text>
-                                </InputGroup.Prepend>
+                               
                                 <Form.Control
                                     id="city"
                                     label="city"
@@ -136,6 +132,11 @@ const Box = (props) => {
                                     onChange={handleChange}
                                     onKeyDown={handleSpace}
                                 />
+                                 <InputGroup.Prepend onClick={addCityHandler} >
+                                    <InputGroup.Text id="search-btn">
+                                        <FaSearchengin />
+                                    </InputGroup.Text>
+                                </InputGroup.Prepend>
                              </InputGroup>
 
                             
