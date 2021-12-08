@@ -14,12 +14,13 @@ import Metric from './Metric';
 
 const Box = (props) => {
     const [showMore, setMore] = useState('');
+    const [showListItem, setListItem] = useState('');
+
     const [city, setCity] = useState('boston');
     const [showListcity, setListcity] = useState([]);
     const [showWeather, setWeather] = useState([]);
     const [showWeekWeather, setWeekWeather] = useState([]);
     const [degree, setDegree] = useState('Farenheit');
-
     const toggle = () => setMore(!showMore);
 
     
@@ -89,7 +90,8 @@ const Box = (props) => {
 
     //List the cities when type on textbox       
     const handleSpace = (e) => {
-        if (e.keyCode === 32) {
+        setListItem(!showListItem);
+
             axios.post('https://weather-framework.herokuapp.com/api/listdata', { 'city': city })
                 .then(res => {
                     setListcity(res.data)
@@ -98,7 +100,7 @@ const Box = (props) => {
                     console.log("Error in response", err)
                 })
 
-        }
+       
     };
 
 
@@ -142,7 +144,7 @@ const Box = (props) => {
 
 
                     </Form.Row>
-                    <Listlocation data={showListcity} city={(city) => setCity(city)}></Listlocation>
+                    {showListItem && <Listlocation data={showListcity} city={(city) => setCity(city)} ></Listlocation>}
                 </Card.Header>
 
                 <GetData data={weatherData} degree = {degree} ></GetData>
