@@ -92,7 +92,7 @@ const Box = (props) => {
     const handleSpace = (e) => {
         setListItem(!showListItem);
 
-            axios.post('http://localhost:4000/listdata', { 'city': city })
+            axios.post('https://weather-framework.herokuapp.com/api/listdata', { 'city': city })
                 .then(res => {
                     setListcity(res.data)
                 })
