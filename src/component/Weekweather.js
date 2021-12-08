@@ -11,7 +11,7 @@ const Weekweather = (props) => {
     }
     return (
         <div>
-           <Card style={{ width: '50rem' }} className="bg-dark text-white text-center">
+           <Card  className="bg-dark text-white text-center">
                 <Card.Header>
                     <Form.Row>
                         <Form.Group as={Col}>
