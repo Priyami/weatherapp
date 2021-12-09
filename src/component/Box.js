@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Card, Button, Form, InputGroup, Col, CardGroup } from 'react-bootstrap';
+import React from 'react';
+import { Card, Button, Form, InputGroup, Col } from 'react-bootstrap';
 import "./Box.css";
 import { FaSearchengin } from 'react-icons/fa';
 import { useState, useEffect } from 'react';

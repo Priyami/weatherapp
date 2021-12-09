@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
 import "./GetData.css";
 
