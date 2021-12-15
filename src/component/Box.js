@@ -16,12 +16,16 @@ import WErrorModal from './UI/WErrorModal';
 const Box = (props) => {
     const [showMore, setMore] = useState('');
     const [showListItem, setListItem] = useState('');
-
+    const [showError, setError] = useState();
     const [city, setCity] = useState('boston');
     const [showListcity, setListcity] = useState([]);
     const [showWeather, setWeather] = useState([]);
     const [showWeekWeather, setWeekWeather] = useState([]);
     const [degree, setDegree] = useState('Farenheit');
+
+    const errorHandler = () => {
+        setError(null);
+    }
     const toggle = () => setMore(!showMore);
 
     
@@ -67,6 +71,23 @@ const Box = (props) => {
     }, [])
     const addCityHandler = () => {
         //Weather Data as per the Cityname in inputfield
+        var containsAlphabet = /^[A-Za-z ,]+$/;
+        console.log("city", city);
+        if(city.trim().length === 0 )
+        {
+            setError({
+                title: 'Invalid Input',
+                message: 'Please enter valid city name (non-empty)'
+            });
+            
+        }
+        if(!city.match(containsAlphabet)){
+            setError({
+                title: 'Invalid Input',
+                message: 'Please enter valid city name (Alphabets only)'
+            })
+        }
+        
         axios.post('https://weather-framework.herokuapp.com/api/fullcitysearch', { 'fullcityname': city })
             .then(res => {
                 setWeather(res.data)
@@ -148,7 +169,7 @@ const Box = (props) => {
                     </Form.Row>
                     {showListItem && <Listlocation data={showListcity} city={(city) => setCity(city)} ></Listlocation>}
                 </Card.Header>
-                <WErrorModal title= "An Error occured" message="Please solve the issue"/>
+                {showError && <WErrorModal title= {showError.title} message={showError.message} onConfirm = {errorHandler}/>}
 
                 <GetData data={weatherData} degree = {degree} ></GetData>
                 <Button variant="primary" onClick={toggle} >More Details</Button>

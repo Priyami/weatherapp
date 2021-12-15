@@ -5,18 +5,18 @@ import styles from './WErrorModal.module.css';
 const WErrorModal = props => {
     return (
         <div>
-            <div/>
-            <WCard>
+            <div className= {styles.backdrop} onClick = {props.onConfirm}/>
+            <WCard className = {styles.modal}>
                 <header className = {styles.header}>
-                    <h3>
+                    <p>
                         {props.title}
-                    </h3>
+                    </p>
                 </header>
                 <p className = {styles.content}>
                     {props.message}
                 </p>
                 <footer className = {styles.actions}>
-                    <WButton>Okay</WButton>
+                    <WButton onClick = {props.onConfirm}>Okay</WButton>
                 </footer>
             </WCard>
         </div>
