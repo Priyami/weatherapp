@@ -9,6 +9,7 @@ import GetData from './GetData';
 import Weekweather from './Weekweather';
 import Listlocation from './Listlocation';
 import Metric from './Metric';
+import WErrorModal from './UI/WErrorModal';
 
 
 
@@ -147,6 +148,7 @@ const Box = (props) => {
                     </Form.Row>
                     {showListItem && <Listlocation data={showListcity} city={(city) => setCity(city)} ></Listlocation>}
                 </Card.Header>
+                <WErrorModal title= "An Error occured" message="Please solve the issue"/>
 
                 <GetData data={weatherData} degree = {degree} ></GetData>
                 <Button variant="primary" onClick={toggle} >More Details</Button>
