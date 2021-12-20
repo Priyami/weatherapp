@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Button, Form, InputGroup, Col } from 'react-bootstrap';
 import "./Box.css";
 import { FaSearchengin } from 'react-icons/fa';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import background from "/src/images/Background.jpg";
 import axios from 'axios';
 import GetData from './GetData';
@@ -11,11 +11,22 @@ import Listlocation from './Listlocation';
 import Metric from './Metric';
 import WErrorModal from './UI/WErrorModal';
 
+const initialState = { details: false, list: false};
 
-
+const toggleReducer = (state, action)=> {
+  switch (action.type) {
+    case "TOGGLE_MORE_DETAILS":
+      return { details: !state.details};
+    case "TOGGLE_LIST_ITEM":
+      return { list: !state.list};
+    default:
+      throw new Error();
+  }
+}
 const Box = (props) => {
-    const [showMore, setMore] = useState('');
-    const [showListItem, setListItem] = useState('');
+    const [toggleState, dispatchToggle] = useReducer(toggleReducer, initialState);
+    //const [showMore, setMore] = useState('');
+    //const [showListItem, setListItem] = useState('');
     const [showError, setError] = useState();
     const [city, setCity] = useState('boston');
     const [showListcity, setListcity] = useState([]);
@@ -26,9 +37,12 @@ const Box = (props) => {
     const errorHandler = () => {
         setError(null);
     }
-    const toggle = () => setMore(!showMore);
+    const toggle = () => 
+    {   
+        
+        dispatchToggle({type: 'TOGGLE_MORE_DETAILS'})
 
-    
+    }
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -112,7 +126,8 @@ const Box = (props) => {
 
     //List the cities when type on textbox       
     const handleSpace = (e) => {
-        setListItem(!showListItem);
+        dispatchToggle({type: 'TOGGLE_LIST_ITEM'})
+
 
             axios.post('https://weather-framework.herokuapp.com/api/listdata', { 'city': city })
                 .then(res => {
@@ -167,13 +182,13 @@ const Box = (props) => {
 
 
                     </Form.Row>
-                    {showListItem && <Listlocation data={showListcity} city={(city) => setCity(city)} ></Listlocation>}
+                    {toggleState.list && <Listlocation data={showListcity} city={(city) => setCity(city)} ></Listlocation>}
                 </Card.Header>
                 {showError && <WErrorModal title= {showError.title} message={showError.message} onConfirm = {errorHandler}/>}
 
                 <GetData data={weatherData} degree = {degree} ></GetData>
                 <Button variant="primary" onClick={toggle} >More Details</Button>
-                {showMore && <Weekweather data={weekData}></Weekweather>}
+                {toggleState.details && <Weekweather data={weekData}></Weekweather>}
 
             </Card>
 
