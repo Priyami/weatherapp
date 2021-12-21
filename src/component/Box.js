@@ -11,17 +11,34 @@ import Listlocation from './Listlocation';
 import Metric from './Metric';
 import WErrorModal from './UI/WErrorModal';
 
-const initialState = { details: false, list: false};
+const initialState = { moreDetails: false, cityList: false};
 
 const toggleReducer = (state, action)=> {
   switch (action.type) {
     case "TOGGLE_MORE_DETAILS":
-      return { details: !state.details};
+      return { moreDetails: !state.moreDetails};
     case "TOGGLE_LIST_ITEM":
-      return { list: !state.list};
+      return { cityList: !state.cityList};
     default:
       throw new Error();
   }
+}
+const initState = {  defaultWeather : [], weekWeather: [], listCity:[]};
+
+const apiReducer = (state, action) => {
+    switch (action.type) {
+        case "DEFAULT_WEEK_WEATHER":
+            return {...state, weekWeather: action.payload};
+        case "DEFAULT_WEATHER":
+            return {...state, defaultWeather: action.payload};
+        case "FULLCITY_WEATHER":
+            return {...state, defaultWeather: action.payload};
+        case "WEEK_WEATHER":
+            return { ...state, weekWeather: action.payload};
+        case "LIST_CITY":
+            return {...state, listCity: action.payload};
+    }
+
 }
 const Box = (props) => {
     const [toggleState, dispatchToggle] = useReducer(toggleReducer, initialState);
@@ -29,9 +46,10 @@ const Box = (props) => {
     //const [showListItem, setListItem] = useState('');
     const [showError, setError] = useState();
     const [city, setCity] = useState('boston');
-    const [showListcity, setListcity] = useState([]);
-    const [showWeather, setWeather] = useState([]);
-    const [showWeekWeather, setWeekWeather] = useState([]);
+    const [apiState, dispatchApi] = useReducer(apiReducer, initState)
+   // const [showListcity, setListcity] = useState([]);
+   // const [showWeather, setWeather] = useState([]);
+   // const [showWeekWeather, setWeekWeather] = useState([]);
     const [degree, setDegree] = useState('Farenheit');
 
     const errorHandler = () => {
@@ -61,7 +79,8 @@ const Box = (props) => {
         axios.post('https://weather-framework.herokuapp.com/api/week', { 'cityname': city })
             .then((res) => {
                 if (mounted) {
-                    setWeekWeather(res.data)
+                    //setWeekWeather(res.data)
+                    dispatchApi({type: 'DEFAULT_WEEK_WEATHER', payload:res.data})
                     console.log("week weather", res.data)
                 }
                 return () => mounted = false;
@@ -76,7 +95,8 @@ const Box = (props) => {
         axios.get('https://weather-framework.herokuapp.com/api')
             .then((result) => {
                 if (mounted) {
-                    setWeather(result.data)
+                   // setWeather(result.data)
+                    dispatchApi({type: 'DEFAULT_WEATHER', payload: result.data})
                 }
 
                 return () => mounted = false;
@@ -104,8 +124,8 @@ const Box = (props) => {
         
         axios.post('https://weather-framework.herokuapp.com/api/fullcitysearch', { 'fullcityname': city })
             .then(res => {
-                setWeather(res.data)
-
+                //setWeather(res.data)
+                dispatchApi({type: 'FULLCITY_WEATHER', payload: res.data})
             })
             .catch(err => {
                 console.log("Error in Request", err);
@@ -114,8 +134,8 @@ const Box = (props) => {
         //Three Days weather on More Details Click      
         axios.post('https://weather-framework.herokuapp.com/api/week', { 'cityname': city })
             .then(res => {
-                setWeekWeather(res.data)
-
+               // setWeekWeather(res.data)
+                dispatchApi({type: 'WEEK_WEATHER', payload: res.data})
             })
             .catch(err => {
                 console.log("Error in Request", err);
@@ -131,7 +151,8 @@ const Box = (props) => {
 
             axios.post('https://weather-framework.herokuapp.com/api/listdata', { 'city': city })
                 .then(res => {
-                    setListcity(res.data)
+                    //setListcity(res.data)
+                    dispatchApi({type: 'LIST_CITY', payload: res.data})
                 })
                 .catch(err => {
                     console.log("Error in response", err)
@@ -141,12 +162,12 @@ const Box = (props) => {
     };
 
 
-    let weekData = Object.keys(showWeekWeather).map((key) => {
-        console.log("weather week", showWeekWeather[key]);
-        return showWeekWeather[key]
+    let weekData = Object.keys(apiState.weekWeather).map((key) => {
+        console.log("weather week", apiState.weekWeather[key]);
+        return apiState.weekWeather[key]
     })
-    let weatherData = Object.keys(showWeather).map((key) => {
-        return showWeather[key]
+    let weatherData = Object.keys(apiState.defaultWeather).map((key) => {
+        return apiState.defaultWeather[key]
     })
 
 
@@ -182,13 +203,13 @@ const Box = (props) => {
 
 
                     </Form.Row>
-                    {toggleState.list && <Listlocation data={showListcity} city={(city) => setCity(city)} ></Listlocation>}
+                    {toggleState.cityList && <Listlocation data={apiState.listCity} city={(city) => setCity(city)} ></Listlocation>}
                 </Card.Header>
                 {showError && <WErrorModal title= {showError.title} message={showError.message} onConfirm = {errorHandler}/>}
 
                 <GetData data={weatherData} degree = {degree} ></GetData>
                 <Button variant="primary" onClick={toggle} >More Details</Button>
-                {toggleState.details && <Weekweather data={weekData}></Weekweather>}
+                {toggleState.moreDetails && <Weekweather data={weekData}></Weekweather>}
 
             </Card>
 
