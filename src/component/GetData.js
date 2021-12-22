@@ -34,7 +34,7 @@ const GetData = (data) => {
                 <Card.Text>Cloud:{combinedData.cloud}</Card.Text>
                 <Card.Text>Humidity:{combinedData.humidity}</Card.Text>
                 <Card.Text>Perciptition:{combinedData.precip_mm}</Card.Text>
-                <Card.Text>Feelslike:{combinedData.feelslike_f}</Card.Text>
+                <Card.Text>{(data.degree === 'Farenheit')?<div>Feelslike:{combinedData.feelslike_f}<span>&#8457;</span></div>:<div>Feelslike:{combinedData.feelslike_c} <span>&#8451;</span></div>}</Card.Text>
             </Card.Body>
 
         </div>
