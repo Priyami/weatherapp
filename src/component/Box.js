@@ -64,6 +64,20 @@ const Box = (props) => {
 
             })
     }, [])
+    //Initial boston list values render to select whatever you want
+
+    useEffect(() => {
+        setListItem(!showListItem); 
+
+        axios.post('https://weather-framework.herokuapp.com/api/listdata', {"city": city})
+        .then(res => {
+            setListcity(res.data)
+        })
+        .catch(err => {
+            console.log("Error in response", err)
+        })
+    }, [])
+
     const addCityHandler = () => {
         //Weather Data as per the Cityname in inputfield
         axios.post('https://weather-framework.herokuapp.com/api/fullcitysearch', { 'fullcityname': city })
@@ -90,17 +104,15 @@ const Box = (props) => {
 
     //List the cities when type on textbox       
     const handleSpace = (e) => {
-        setListItem(!showListItem);
+        setListItem(!showListItem); 
 
-            axios.post('https://weather-framework.herokuapp.com/api/listdata', { 'city': city })
-                .then(res => {
-                    setListcity(res.data)
-                })
-                .catch(err => {
-                    console.log("Error in response", err)
-                })
-
-       
+        axios.post('https://weather-framework.herokuapp.com/api/listdata', {"city": city})
+        .then(res => {
+            setListcity(res.data)
+        })
+        .catch(err => {
+            console.log("Error in response", err)
+        })
     };
 
 
