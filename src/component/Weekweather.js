@@ -17,9 +17,9 @@ const Weekweather = (props) => {
                 <Card.Body >
                     {forecast.map((forecast,id) => (
                     <ListGroup  className = "list-group-forecast " key = {id} >
-                        <ListGroup.Item className = "bg-dark text-white text-center ">{dayDate(forecast.date)}</ListGroup.Item>
-                        <ListGroup.Item>{forecast.day.condition.text}</ListGroup.Item>
-                        <ListGroup.Item><img src = {forecast.day.condition.icon}/></ListGroup.Item>
+                        <ListGroup.Item className = " text-black text-center ">{dayDate(forecast.date)}</ListGroup.Item>
+                        <ListGroup.Item className = "bg-dark text-white text-center ">{forecast.day.condition.text}</ListGroup.Item>
+                        <ListGroup.Item className = "bg-dark text-white text-center "><img src = {forecast.day.condition.icon}/></ListGroup.Item>
                         </ListGroup>
                      ))}
                 </Card.Body>
