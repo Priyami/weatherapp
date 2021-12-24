@@ -23,18 +23,14 @@ const toggleReducer = (state, action) => {
             throw new Error();
     }
 }
-const initState = { defaultWeather: [], weekWeather: [], listCity: [] };
+const initState = { weatherData: [], listCity: [] };
 
 const apiReducer = (state, action) => {
     switch (action.type) {
         case "DEFAULT_WEEK_WEATHER":
-            return { ...state, weekWeather: action.payload };
-        case "DEFAULT_WEATHER":
-            return { ...state, defaultWeather: action.payload };
-        case "FULLCITY_WEATHER":
-            return { ...state, defaultWeather: action.payload };
-        case "WEEK_WEATHER":
-            return { ...state, weekWeather: action.payload };
+            return { ...state, weatherData: action.payload };
+        case "SEARCH_WEATHER":
+            return { ...state, weatherData: action.payload };
         case "LIST_CITY":
             return { ...state, listCity: action.payload };
     }
@@ -56,46 +52,38 @@ const Box = (props) => {
 
     const handleChange = (e) => {
         e.preventDefault();
-
-        if (e.target.id === "city") {
-            setCity(e.target.value);
-        }
+       
+            if (e.target.id === "city" || e.keyCode == 13) {
+                setCity(e.target.value);
+            }
+        
 
     }
 
     //Three Days weather on More Details Click (Default Boston weather details onMount)
 
     useEffect(() => {
+
         let mounted = true
 
         axios.post('https://weather-framework.herokuapp.com/api/week', { 'cityname': city })
             .then((res) => {
                 if (mounted) {
+
                     dispatchApi({ type: 'DEFAULT_WEEK_WEATHER', payload: res.data })
-                    console.log("week weather", res.data)
+
                 }
-                return () => mounted = false;
             })
 
-    }, [])
-    //Default Weather Boston - Api from Node Server
 
-    useEffect(() => {
-        let mounted = true
+        return () => mounted = false;
 
-        axios.get('https://weather-framework.herokuapp.com/api')
-            .then((result) => {
-                if (mounted) {
-                    dispatchApi({ type: 'DEFAULT_WEATHER', payload: result.data })
-                }
+    }, [toggleState])
 
-                return () => mounted = false;
-
-            })
-    }, [])
     const addCityHandler = () => {
         //Weather Data as per the Cityname in inputfield
-        var containsAlphabet = /^[A-Za-z ,]+$/;
+        var containsAlphabet = /^[0-9]+$/;
+
         console.log("city", city);
         if (city.trim().length === 0) {
             setError({
@@ -104,25 +92,18 @@ const Box = (props) => {
             });
 
         }
-        if (!city.match(containsAlphabet)) {
+        if (city.match(containsAlphabet)) {
             setError({
                 title: 'Invalid Input',
                 message: 'Please enter valid city name (Alphabets only)'
             })
+
         }
 
-        axios.post('https://weather-framework.herokuapp.com/api/fullcitysearch', { 'fullcityname': city })
-            .then(res => {
-                dispatchApi({ type: 'FULLCITY_WEATHER', payload: res.data })
-            })
-            .catch(err => {
-                console.log("Error in Request", err);
 
-            });
-        //Three Days weather on More Details Click      
         axios.post('https://weather-framework.herokuapp.com/api/week', { 'cityname': city })
             .then(res => {
-                dispatchApi({ type: 'WEEK_WEATHER', payload: res.data })
+                dispatchApi({ type: 'SEARCH_WEATHER', payload: res.data })
             })
             .catch(err => {
                 console.log("Error in Request", err);
@@ -133,6 +114,26 @@ const Box = (props) => {
 
     //List the cities when type on textbox       
     const handleSpace = (e) => {
+        if (e.keyCode == 13) {
+            console.log("enter key pressed");
+            var containsAlphabet = /^[0-9]+$/;
+
+            console.log("city enter key pressed", city);
+            if (city.trim().length === 0) {
+                setError({
+                    title: 'Invalid Input',
+                    message: 'Please enter valid city name (non-empty)'
+                });
+
+            }
+            if (city.match(containsAlphabet)) {
+                setError({
+                    title: 'Invalid Input',
+                    message: 'Please enter valid city name (Alphabets only)'
+                })
+
+            }
+        }
         dispatchToggle({ type: 'TOGGLE_LIST_ITEM' })
 
 
@@ -144,17 +145,13 @@ const Box = (props) => {
                 console.log("Error in response", err)
             })
 
-
     };
 
 
-    let weekData = Object.keys(apiState.weekWeather).map((key) => {
-        console.log("weather week", apiState.weekWeather[key]);
-        return apiState.weekWeather[key]
+    let jsonData = Object.keys(apiState.weatherData).map((key) => {
+        return apiState.weatherData[key]
     })
-    let weatherData = Object.keys(apiState.defaultWeather).map((key) => {
-        return apiState.defaultWeather[key]
-    })
+
 
 
     return (
@@ -193,9 +190,9 @@ const Box = (props) => {
                 </Card.Header>
                 {showError && <WErrorModal title={showError.title} message={showError.message} onConfirm={errorHandler} />}
 
-                <GetData data={weatherData} degree={degree} ></GetData>
+                <GetData data={jsonData} degree={degree} ></GetData>
                 <Button variant="primary" onClick={toggle} >More Details</Button>
-                {toggleState.moreDetails && <Weekweather data={weekData} degree={degree}></Weekweather>}
+                {toggleState.moreDetails && <Weekweather data={jsonData} degree={degree}></Weekweather>}
 
             </Card>
 

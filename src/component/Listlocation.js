@@ -4,8 +4,7 @@ import "./Listlocation.css";
 const Listlocation = (data) => {
     const [item, setItem] = useState(true);
 
-    console.log(data.data, "Listlocation")
-    console.log(item, "itemClicked")
+    
 
     const handleClick = (e) => {
         setItem(!item);

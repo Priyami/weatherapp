@@ -23,25 +23,12 @@ const PORT = process.env.PORT || 4000
 
 
 
-app.get('/api', async (req, res) => {
-	try {
-		const response = await axios({
-			url: `https://api.weatherapi.com/v1/current.json?key=${api_key}&q=boston`,
-			method: "get",
-			headers: { 'content-type': 'application/json' },
 
-		});
-		res.status(200).json(response.data);
-	} catch (err) {
-		res.status(500).json({ message: err });
-	}
-})
 
 
 app.post('/api/week', async (req, res) => {
 	try {
 		const cityName = req.body.cityname;
-		console.log("week" + cityName);
 		const response = await axios({
 			url: `https://api.weatherapi.com/v1/forecast.json?key=${api_key}&q=${cityName}&days=7`,
 			method: "get",
@@ -66,21 +53,7 @@ app.post('/api/listdata', async (req, res) => {
 	}
 });
 
-app.post('/api/fullcitysearch', async (req, res) => {
-	
-	 const fullCityName = req.body.fullcityname;
-	 try {
-		const response = await axios({
-			url: `https://api.weatherapi.com/v1/current.json?key=${api_key}&q=${fullCityName}`,
-			method: "get",
 
-		});
-		res.status(200).json(response.data);
-	} catch (err) {
-		res.status(500).json({ message: err });
-	}
-	
-});
 
 
 

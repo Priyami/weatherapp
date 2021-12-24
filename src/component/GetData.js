@@ -3,13 +3,12 @@ import { Card, Col, Row } from 'react-bootstrap';
 import "./GetData.css";
 
 const GetData = (data) => {
-    let combinedData = { ...data.data[0], ...data.data[1] }
-  
+    let combinedData = { ...data.data[0], ...data.data[1], ...data.data[2] }
     return (
 
         <div>
             <Card.Body >
-                <Card.Title> Weather in {combinedData.name} </Card.Title>
+                <Card.Title> Current Weather in {combinedData.name} </Card.Title>
                 <Card.Text>
                     <Row>
                         <Col className="temperature">
