@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Button, Form, InputGroup, Col } from 'react-bootstrap';
 import "./Box.css";
 import { FaSearchengin } from 'react-icons/fa';
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect, useReducer, useRef } from 'react';
 import background from "/src/images/Background.jpg";
 import axios from 'axios';
 import GetData from './GetData';
@@ -42,6 +42,8 @@ const Box = (props) => {
     const [city, setCity] = useState('boston');
     const [apiState, dispatchApi] = useReducer(apiReducer, initState);
     const [degree, setDegree] = useState('Farenheit');
+    const inputRef = useRef('');
+
 
     const errorHandler = () => {
         setError(null);
@@ -52,36 +54,33 @@ const Box = (props) => {
 
     const handleChange = (e) => {
         e.preventDefault();
-       
-            if (e.target.id === "city" || e.keyCode == 13) {
-                setCity(e.target.value);
-            }
-        
-
+        setCity(e.target.value);
     }
 
-    //Three Days weather on More Details Click (Default Boston weather details onMount)
+    //Three Days weather + Default Boston weather details onMount
 
     useEffect(() => {
 
         let mounted = true
-
         axios.post('https://weather-framework.herokuapp.com/api/week', { 'cityname': city })
             .then((res) => {
                 if (mounted) {
 
                     dispatchApi({ type: 'DEFAULT_WEEK_WEATHER', payload: res.data })
-
                 }
             })
+            .catch(err => {
 
-
+                console.log("Error in Request", err.res);
+            });
         return () => mounted = false;
 
-    }, [toggleState])
+
+
+    }, [!city.trim().length < 3])
 
     const addCityHandler = () => {
-        //Weather Data as per the Cityname in inputfield
+        //Weather Data as per the Cityname in inputfield onclick search button Check validity
         var containsAlphabet = /^[0-9]+$/;
 
         console.log("city", city);
@@ -112,10 +111,8 @@ const Box = (props) => {
 
     }
 
-    //List the cities when type on textbox       
     const handleSpace = (e) => {
         if (e.keyCode == 13) {
-            console.log("enter key pressed");
             var containsAlphabet = /^[0-9]+$/;
 
             console.log("city enter key pressed", city);
@@ -133,18 +130,32 @@ const Box = (props) => {
                 })
 
             }
+
+            axios.post('https://weather-framework.herokuapp.com/api/week', { 'cityname': city })
+                .then(res => {
+                    dispatchApi({ type: 'SEARCH_WEATHER', payload: res.data })
+                })
+                .catch(err => {
+                    console.log("Error in Request", err);
+
+                })
+
+
         }
+
         dispatchToggle({ type: 'TOGGLE_LIST_ITEM' })
+        //List the cities when type on textbox       
 
+        if (city.trim().length > 3) {
+            axios.post('https://weather-framework.herokuapp.com/api/listdata', { 'city': city })
+                .then(res => {
+                    dispatchApi({ type: 'LIST_CITY', payload: res.data })
 
-        axios.post('https://weather-framework.herokuapp.com/api/listdata', { 'city': city })
-            .then(res => {
-                dispatchApi({ type: 'LIST_CITY', payload: res.data })
-            })
-            .catch(err => {
-                console.log("Error in response", err)
-            })
-
+                })
+                .catch(err => {
+                    console.log("Error in response", err)
+                })
+        }
     };
 
 
@@ -164,6 +175,7 @@ const Box = (props) => {
                             <InputGroup>
 
                                 <Form.Control
+                                    ref={inputRef}
                                     id="city"
                                     label="city"
                                     name="city"
@@ -186,7 +198,7 @@ const Box = (props) => {
 
 
                     </Form.Row>
-                    {toggleState.cityList && <Listlocation data={apiState.listCity} city={(city) => setCity(city)} ></Listlocation>}
+                    {toggleState.cityList && <Listlocation data={apiState.listCity} city={(city) => setCity(city)} activate={inputRef} ></Listlocation>}
                 </Card.Header>
                 {showError && <WErrorModal title={showError.title} message={showError.message} onConfirm={errorHandler} />}
 

@@ -10,7 +10,7 @@ const Listlocation = (data) => {
         setItem(!item);
         e.preventDefault();
         data.city(e.target.innerText);
-
+        data.activate.current.focus();
     }
 
     return (
