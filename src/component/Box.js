@@ -143,14 +143,14 @@ const Box = (props) => {
 
         }
 
-        dispatchToggle({ type: 'TOGGLE_LIST_ITEM' })
+        
         //List the cities when type on textbox       
 
         if (city.trim().length > 3) {
+            dispatchToggle({ type: 'TOGGLE_LIST_ITEM' })
             axios.post('https://weather-framework.herokuapp.com/api/listdata', { 'city': city })
                 .then(res => {
                     dispatchApi({ type: 'LIST_CITY', payload: res.data })
-
                 })
                 .catch(err => {
                     console.log("Error in response", err)

@@ -18,7 +18,7 @@ const Listlocation = (data) => {
              {
                 data.data.map(location =>
                     <ListGroup variant="dark" key={location.id} >
-                        {item && <ListGroup.Item onClick={handleClick} >{location.name}</ListGroup.Item>}
+                        {item && <ListGroup.Item onClick={handleClick} >{location.name}, {location.region}, {location.country}</ListGroup.Item>}
                     </ListGroup>
 
                 )
