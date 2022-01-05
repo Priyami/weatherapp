@@ -1,25 +1,36 @@
 import React from 'react';
-import { Card, ListGroup } from 'react-bootstrap';
+import { Card, Table } from 'react-bootstrap';
+import Hourlyweather from './Hourlyweather';
+
 import moment from 'moment';
 import "./Weekweather.css";
 
 const Weekweather = (props) => {
     var combinedData = {...props.data[0], ...props.data[1], ...props.data[2]}
     var forecast = combinedData.forecastday;
-    
     function dayDate(date){
         return new moment(date).format('ddd')
     }
     return (
         <div>
            <Card  className="bg-dark text-white text-center">
-                
+             
                 <Card.Body >
+                    <span>Hourly</span>
+                    <Hourlyweather data ={props.data} degree= {props.degree}></Hourlyweather>
+                </Card.Body>
+            </Card>
+            <Card  className="bg-dark text-white text-center">
+                
+                <Card.Body className= "card-body-forecast" > 
+                <Table variant="dark" responsive>
+                    <tbody>
                     {forecast.map((forecast,id) => (
-                    <ListGroup  className = "list-group-forecast " key = {id} >
-                        <ListGroup.Item className = " text-black text-center ">{dayDate(forecast.date)}</ListGroup.Item>
-                        <ListGroup.Item className = "bg-dark text-white text-center ">{forecast.day.condition.text} </ListGroup.Item>
-                        <ListGroup.Item className = "bg-dark text-white text-center ">{(props.degree === 'Farenheit')
+                    <td key = {id} >
+                        <td>
+                        <tr>{dayDate(forecast.date)}</tr>
+                        <tr>{forecast.day.condition.text} </tr>
+                        <tr>{(props.degree === 'Farenheit')
                                 ?
 
                                 <div>
@@ -32,10 +43,13 @@ const Weekweather = (props) => {
                                     {forecast.day.avgtemp_c}
                                     <span>&#8451;</span>
                                 </div>
-                            }</ListGroup.Item>
-                        <ListGroup.Item className = "bg-dark text-white text-center "><img src = {forecast.day.condition.icon}/></ListGroup.Item>
-                        </ListGroup>
+                            }</tr>
+                        <tr><img src = {forecast.day.condition.icon}/></tr>
+                        </td>
+                        </td>
                      ))}
+                     </tbody>
+                </Table>
                 </Card.Body>
             </Card>
         </div>

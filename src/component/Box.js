@@ -204,8 +204,8 @@ const Box = (props) => {
 
                 <GetData data={jsonData} degree={degree} ></GetData>
                 <Button variant="primary" onClick={toggle} >More Details</Button>
-                {toggleState.moreDetails && <Weekweather data={jsonData} degree={degree}></Weekweather>}
-
+                {toggleState.moreDetails && <Weekweather data={jsonData} degree={degree}></Weekweather> }
+               
             </Card>
 
         </div>
