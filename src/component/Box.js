@@ -10,6 +10,7 @@ import Weekweather from './Weekweather';
 import Listlocation from './Listlocation';
 import Metric from './Metric';
 import WErrorModal from './UI/WErrorModal';
+import DegreeContext from './store/degree-context';
 
 const initialState = { moreDetails: false, cityList: false };
 
@@ -143,7 +144,7 @@ const Box = (props) => {
 
         }
 
-        
+
         //List the cities when type on textbox       
 
         if (city.trim().length > 3) {
@@ -168,47 +169,47 @@ const Box = (props) => {
     return (
 
         <div className="box" style={{ backgroundImage: `url(${background})` }}>
-            <Card style={{ width: '50rem' }} className="bg-dark text-white text-center">
-                <Card.Header>
-                    <Form.Row>
-                        <Form.Group as={Col} >
-                            <InputGroup>
+            <DegreeContext.Provider value={{
+                degree: degree,
+            }}>
+                <Card style={{ width: '50rem' }} className="bg-dark text-white text-center">
+                    <Card.Header>
+                        <Form.Row>
+                            <Form.Group as={Col} >
+                                <InputGroup>
 
-                                <Form.Control
-                                    ref={inputRef}
-                                    id="city"
-                                    label="city"
-                                    name="city"
-                                    value={city}
-                                    type="text"
-                                    placeholder="Search by city here.."
-                                    onChange={handleChange}
-                                    onKeyDown={handleSpace}
-                                />
-                                <InputGroup.Prepend onClick={addCityHandler} >
-                                    <InputGroup.Text id="search-btn">
-                                        <FaSearchengin />
-                                    </InputGroup.Text>
-                                </InputGroup.Prepend>
-                            </InputGroup>
+                                    <Form.Control
+                                        ref={inputRef}
+                                        id="city"
+                                        label="city"
+                                        name="city"
+                                        value={city}
+                                        type="text"
+                                        placeholder="Search by city here.."
+                                        onChange={handleChange}
+                                        onKeyDown={handleSpace}
+                                    />
+                                    <InputGroup.Prepend onClick={addCityHandler} >
+                                        <InputGroup.Text id="search-btn">
+                                            <FaSearchengin />
+                                        </InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                </InputGroup>
+                            </Form.Group>
+                            <Form.Group > <Metric degree={(degree) => setDegree(degree)} ></Metric></Form.Group>
+                        </Form.Row>
+                        {toggleState.cityList && <Listlocation data={apiState.listCity} city={(city) => setCity(city)} activate={inputRef} ></Listlocation>}
+                    </Card.Header>
+                    {showError && <WErrorModal title={showError.title} message={showError.message} onConfirm={errorHandler} />}
 
+                    <GetData data={jsonData}  ></GetData>
+                    <Button variant="primary" onClick={toggle} >More Details</Button>
+                    {toggleState.moreDetails && <Weekweather data={jsonData}></Weekweather>}
 
-                        </Form.Group>
-                        <Form.Group > <Metric degree={(degree) => setDegree(degree)} ></Metric></Form.Group>
+                </Card>
+            </DegreeContext.Provider>
 
-
-                    </Form.Row>
-                    {toggleState.cityList && <Listlocation data={apiState.listCity} city={(city) => setCity(city)} activate={inputRef} ></Listlocation>}
-                </Card.Header>
-                {showError && <WErrorModal title={showError.title} message={showError.message} onConfirm={errorHandler} />}
-
-                <GetData data={jsonData} degree={degree} ></GetData>
-                <Button variant="primary" onClick={toggle} >More Details</Button>
-                {toggleState.moreDetails && <Weekweather data={jsonData} degree={degree}></Weekweather>}
-
-            </Card>
-
-        </div>
+        </div >
     )
 }
 export default Box;
