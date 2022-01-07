@@ -2,4 +2,9 @@
 .metric
 {
     padding-right: 120px;
+    
+}
+.temperature {
+    font-weight: bold;
+    font-size: xx-large
 }
