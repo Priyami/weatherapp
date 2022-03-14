@@ -6,7 +6,7 @@ const initialState = {
     
 }
 
-const cartReducer = (state = initialState, action) => {    
+const weatherReducer = (state = initialState, action) => {    
     if(action.type === 'ADD') {
            let updatedItems  = [...state.historyItem];
            updatedItems = state.historyItem.concat(action.item);
@@ -27,6 +27,6 @@ const cartReducer = (state = initialState, action) => {
    return state;
 }
 
-const store = createStore(cartReducer);
+const store = createStore(weatherReducer);
 
 export default store;
