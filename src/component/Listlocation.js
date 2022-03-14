@@ -4,8 +4,6 @@ import "./Listlocation.css";
 const Listlocation = (data) => {
     const [item, setItem] = useState(true);
 
-    
-
     const handleClick = (e) => {
         setItem(!item);
         e.preventDefault();
@@ -22,11 +20,8 @@ const Listlocation = (data) => {
                     </ListGroup>
 
                 )
-
             }
         </div>
-
     )
-
 }
 export default Listlocation;

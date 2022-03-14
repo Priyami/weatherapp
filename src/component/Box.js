@@ -7,10 +7,14 @@ import background from "/src/images/Background.jpg";
 import axios from 'axios';
 import GetData from './GetData';
 import Weekweather from './Weekweather';
+import HistoryWeather from './HistoryWeather';
 import Listlocation from './Listlocation';
 import Metric from './Metric';
 import WErrorModal from './UI/WErrorModal';
 import DegreeContext from './store/degree-context';
+
+
+
 
 const initialState = { moreDetails: false, cityList: false };
 
@@ -38,6 +42,7 @@ const apiReducer = (state, action) => {
 
 }
 const Box = (props) => {
+    
     const [toggleState, dispatchToggle] = useReducer(toggleReducer, initialState);
     const [showError, setError] = useState();
     const [city, setCity] = useState('boston');
@@ -51,6 +56,7 @@ const Box = (props) => {
     }
     const toggle = () => {
         dispatchToggle({ type: 'TOGGLE_MORE_DETAILS' })
+        
     }
 
     const handleChange = (e) => {
@@ -172,6 +178,7 @@ const Box = (props) => {
             <DegreeContext.Provider value={{
                 degree: degree,
             }}>
+               
                 <Card style={{ width: '50rem' }} className="bg-dark text-white text-center">
                     <Card.Header>
                         <Form.Row>
@@ -203,10 +210,12 @@ const Box = (props) => {
                     {showError && <WErrorModal title={showError.title} message={showError.message} onConfirm={errorHandler} />}
 
                     <GetData data={jsonData}  ></GetData>
+                    
                     <Button variant="primary" onClick={toggle} >More Details</Button>
-                    {toggleState.moreDetails && <Weekweather data={jsonData}></Weekweather>}
-
+                    {toggleState.moreDetails && <Weekweather data={jsonData}></Weekweather> }
+                    {toggleState.moreDetails &&  <HistoryWeather data={jsonData}></HistoryWeather>}
                 </Card>
+                
             </DegreeContext.Provider>
 
         </div >
