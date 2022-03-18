@@ -9,8 +9,9 @@ const HistoryWeather = (props) => {
     let item = useSelector((state) => state.historyItem);
     const dispatch = useDispatch();
     const combinedData = [{ ...props.data[0], ...props.data[1] }]
-
+    localStorage.setItem('item', JSON.stringify(item));
     useEffect(() => {
+        item.push(...props.retrievedData);
         combinedData.map(history => (
             item = [{
                 cityName: history.name,
@@ -19,9 +20,7 @@ const HistoryWeather = (props) => {
                 temp_f: history.temp_f,
                 temp_c: history.temp_c
             }]
-
         ))
-
         dispatch({ type: 'ADD', item: item });
     }, [dispatch])
 

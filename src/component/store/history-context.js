@@ -1,30 +1,30 @@
-import { createStore} from 'redux';
+import { createStore } from 'redux';
 
 const initialState = {
-   
+
     historyItem: [],
     
+
 }
 
-const weatherReducer = (state = initialState, action) => {    
-    if(action.type === 'ADD') {
-           let updatedItems  = [...state.historyItem];
-           updatedItems = state.historyItem.concat(action.item);
-           console.log("Store History", updatedItems);
-           updatedItems = updatedItems.filter((obj, pos, arr) => {
-               console.log("arr", arr)
+const weatherReducer = (state = initialState, action) => {
+    if (action.type === 'ADD') {
+        let updatedItems = [...state.historyItem];
+        updatedItems = state.historyItem.concat(action.item);
+        updatedItems = updatedItems.filter((obj, pos, arr) => {
             return arr.map(mapObj =>
-                  mapObj.cityName).indexOf(obj.cityName) == pos;
-            });
-          console.log(updatedItems);
+                mapObj.cityName).indexOf(obj.cityName) == pos;
+        });
 
         return {
             ...state,
             historyItem: updatedItems,
-            
-        };  
+
+        };
+
     }
-   return state;
+
+    return state;
 }
 
 const store = createStore(weatherReducer);

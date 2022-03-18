@@ -42,7 +42,7 @@ const apiReducer = (state, action) => {
 
 }
 const Box = (props) => {
-    
+    var retrievedData = JSON.parse(localStorage.getItem('item'));
     const [toggleState, dispatchToggle] = useReducer(toggleReducer, initialState);
     const [showError, setError] = useState();
     const [city, setCity] = useState('boston');
@@ -213,7 +213,7 @@ const Box = (props) => {
                     
                     <Button variant="primary" onClick={toggle} >More Details</Button>
                     {toggleState.moreDetails && <Weekweather data={jsonData}></Weekweather> }
-                    {toggleState.moreDetails &&  <HistoryWeather data={jsonData}></HistoryWeather>}
+                    {toggleState.moreDetails &&  <HistoryWeather data={jsonData} retrievedData={retrievedData}></HistoryWeather>}
                 </Card>
                 
             </DegreeContext.Provider>
