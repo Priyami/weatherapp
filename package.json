@@ -11,7 +11,8 @@
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-prebuild": "npm install --dev",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "watch": "npm run watch"
   },
   "repository": {
     "type": "git",
@@ -28,7 +29,7 @@
   },
   "homepage": "https://Priyami.github.io/weatherapp/",
   "dependencies": {
-    "@reduxjs/toolkit": "^1.7.2",
+    
     "axios": "^0.21.4",
     "body-parser": "^1.19.0",
     "concurrently": "^6.2.1",
@@ -42,7 +43,6 @@
     "path-browserify": "^1.0.1",
     "react": "^17.0.2",
     "react-axios": "^2.0.5",
-    "react-bootstrap": "^1.6.3",
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",
     "react-redux": "^7.2.6",

@@ -1,4 +1,6 @@
-div .list-group-item 
-{
-color:black;
+.list-style {
+    list-style-type:none;
+}
+li {
+    border-bottom: 1px solid #444242;
 }

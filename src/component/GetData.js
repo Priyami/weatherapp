@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { Card, Col, Row } from 'react-bootstrap';
+import React, { useContext, Fragment } from 'react';
+import WCard from './UI/WCard';
 import "./GetData.css";
 import DegreeContext from './store/degree-context';
 const GetData = (data) => {
@@ -7,41 +7,34 @@ const GetData = (data) => {
     let condition = { ...combinedData.condition };
     const ctx = useContext(DegreeContext);
     return (
-        <Card.Body >
-            <Card.Title> Current Weather in {combinedData.name} </Card.Title>
-            <Card.Text>
-                <Row className="justify-content-md-center">
-                    <Col xs lg="2" className="temperature">
-                        {(ctx.degree === 'Farenheit')
-                            ?
-
-                            <div>
-                                {combinedData.temp_f}
-                                <span>&#8457;</span>
-                            </div>
-
-                            :
-                            <div>
-                                {combinedData.temp_c}
-                                <span>&#8451;</span>
-                            </div>
-                        }
-
-                    </Col>
-                    <Col xs lg="2" >
-                        <Card.Text>  <img src={condition.icon} /> </Card.Text>
-                    </Col>
-                    <Row  >
-                        <Card.Text>  {condition.text} </Card.Text>
-                    </Row>
-                </Row>
-            </Card.Text>
-            <Card.Text>Cloud:{combinedData.cloud}</Card.Text>
-            <Card.Text>Humidity:{combinedData.humidity}</Card.Text>
-            <Card.Text>Perciptition:{combinedData.precip_mm}</Card.Text>
-            <Card.Text>{(ctx.degree === 'Farenheit') ? <div>Feelslike:{combinedData.feelslike_f}<span>&#8457;</span></div> : <div>Feelslike:{combinedData.feelslike_c} <span>&#8451;</span></div>}</Card.Text>
-        </Card.Body>
-
+        <Fragment>
+           
+                <h4> Current Weather in {combinedData.name} </h4>
+               
+                    <div className="temperature">
+                       
+                            {(ctx.degree === 'Farenheit')
+                                ?
+                                <span>
+                                    {combinedData.temp_f}
+                                    <span>&#8457;</span>
+                                </span>
+                                :
+                                <span>
+                                    {combinedData.temp_c}
+                                    <span>&#8451;</span>
+                                </span>
+                            }<img src={condition.icon} /> 
+                        
+                            <span>  {condition.text} </span>
+                       
+                </div>
+                <span>Cloud:{combinedData.cloud}</span>
+                <span>Humidity:{combinedData.humidity}</span>
+                <span>Perciptition:{combinedData.precip_mm}</span>
+                <span>{(ctx.degree === 'Farenheit') ? <div>Feelslike:{combinedData.feelslike_f}<span>&#8457;</span></div> : <div>Feelslike:{combinedData.feelslike_c} <span>&#8451;</span></div>}</span>
+           
+        </Fragment>
     )
 }
 export default GetData;

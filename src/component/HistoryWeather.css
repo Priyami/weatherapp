@@ -4,3 +4,8 @@
 table{
     text-align: center;
 }
+.scroll{ 
+    overflow-x:scroll;  
+    overflow-y:visible;
+    padding-bottom:1px;
+}

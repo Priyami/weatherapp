@@ -1,0 +1,11 @@
+.scroll{ 
+    overflow-x:scroll;  
+    overflow-y:visible;
+    padding-bottom:1px;
+}
+.border {
+    border-left: 1px solid #444242;
+}
+table{
+    text-align: center;
+}

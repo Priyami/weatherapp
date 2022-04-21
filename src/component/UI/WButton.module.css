@@ -5,6 +5,7 @@
     color: #fff;
     padding: 0.25rem 1rem;
     cursor: pointer;
+    width: 100%;
   }
   
   .button:hover,

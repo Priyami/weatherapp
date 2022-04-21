@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import { Card, Table } from 'react-bootstrap';
+import React, { useContext, Fragment } from 'react';
 import Hourlyweather from './Hourlyweather';
 import DegreeContext from './store/degree-context';
 import moment from 'moment';
+import WCard from './UI/WCard';
 import "./Weekweather.css";
 
 const Weekweather = (props) => {
@@ -12,50 +12,44 @@ const Weekweather = (props) => {
     function dayDate(date) {
         return new moment(date).format('ddd')
     }
-
+    
     return (
-
-        <div>
-            <Card className="bg-dark text-white text-center">
-
-                <Card.Body >
-                    <span>Hourly</span>
-                    <Hourlyweather data={props.data}></Hourlyweather>
-                </Card.Body>
-            </Card>
-            <Card className="bg-dark text-white text-center">
-
-                <Card.Body className="card-body-forecast" >
-                    <Table variant="dark" responsive>
-                        <tbody>
+        <Fragment>
+            <span>Hourly</span>
+            {<Hourlyweather data={props.data}></Hourlyweather>}
+            <span>Three Day's Weather</span>
+            <WCard>
+                <table >
+                    <tbody>
+                        <tr>
                             {forecast.map((forecast, id) => (
-                                <td key={id} >
-                                    <td>
-                                        <tr>{dayDate(forecast.date)}</tr>
-                                        <tr>{forecast.day.condition.text} </tr>
-                                        <tr>{(ctx.degree === 'Farenheit')
-                                            ?
-
-                                            <div>
-                                                {forecast.day.avgtemp_f}
-                                                <span>&#8457;</span>
-                                            </div>
-
-                                            :
-                                            <div>
-                                                {forecast.day.avgtemp_c}
-                                                <span>&#8451;</span>
-                                            </div>
-                                        }</tr>
-                                        <tr><img src={forecast.day.condition.icon} /></tr>
-                                    </td>
+                                <td key={id} className='table-border' >
+                                    <table>
+                                        <tbody>
+                                            <tr><td>{dayDate(forecast.date)}</td></tr>
+                                            <tr><td>{forecast.day.condition.text}</td></tr>
+                                            <tr><td>{(ctx.degree === 'Farenheit')
+                                                ?
+                                                <div>
+                                                    {forecast.day.avgtemp_f}
+                                                    <span>&#8457;</span>
+                                                </div>
+                                                :
+                                                <div>
+                                                    {forecast.day.avgtemp_c}
+                                                    <span>&#8451;</span>
+                                                </div>
+                                            }</td></tr>
+                                            <tr><td><img src={forecast.day.condition.icon} /></td></tr>
+                                        </tbody>
+                                    </table>
                                 </td>
                             ))}
-                        </tbody>
-                    </Table>
-                </Card.Body>
-            </Card>
-        </div>
+                        </tr>
+                    </tbody>
+                </table>
+            </WCard>
+        </Fragment>
 
     )
 }

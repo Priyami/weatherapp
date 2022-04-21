@@ -1,8 +1,7 @@
 import React from 'react';
-import { Card, Button, Form, InputGroup, Col } from 'react-bootstrap';
 import "./Box.css";
 import { FaSearchengin } from 'react-icons/fa';
-import { useState, useEffect, useReducer, useRef } from 'react';
+import { useState, useEffect, useReducer, useRef, Fragment } from 'react';
 import background from "/src/images/Background.jpg";
 import axios from 'axios';
 import GetData from './GetData';
@@ -12,7 +11,8 @@ import Listlocation from './Listlocation';
 import Metric from './Metric';
 import WErrorModal from './UI/WErrorModal';
 import DegreeContext from './store/degree-context';
-
+import WCard from './UI/WCard';
+import WButton from './UI/WButton';
 
 
 
@@ -42,7 +42,7 @@ const apiReducer = (state, action) => {
 
 }
 const Box = (props) => {
-    var retrievedData = JSON.parse(localStorage.getItem('item'));
+   // var retrievedData = JSON.parse(localStorage.getItem('item'));
     const [toggleState, dispatchToggle] = useReducer(toggleReducer, initialState);
     const [showError, setError] = useState();
     const [city, setCity] = useState('boston');
@@ -56,7 +56,7 @@ const Box = (props) => {
     }
     const toggle = () => {
         dispatchToggle({ type: 'TOGGLE_MORE_DETAILS' })
-        
+
     }
 
     const handleChange = (e) => {
@@ -175,50 +175,44 @@ const Box = (props) => {
     return (
 
         <div className="box" style={{ backgroundImage: `url(${background})` }}>
+
             <DegreeContext.Provider value={{
                 degree: degree,
             }}>
-               
-                <Card style={{ width: '50rem' }} className="bg-dark text-white text-center">
-                    <Card.Header>
-                        <Form.Row>
-                            <Form.Group as={Col} >
-                                <InputGroup>
 
-                                    <Form.Control
-                                        ref={inputRef}
-                                        id="city"
-                                        label="city"
-                                        name="city"
-                                        value={city}
-                                        type="text"
-                                        placeholder="Search by city here.."
-                                        onChange={handleChange}
-                                        onKeyDown={handleSpace}
-                                    />
-                                    <InputGroup.Prepend onClick={addCityHandler} >
-                                        <InputGroup.Text id="search-btn">
-                                            <FaSearchengin />
-                                        </InputGroup.Text>
-                                    </InputGroup.Prepend>
-                                </InputGroup>
-                            </Form.Group>
-                            <Form.Group > <Metric degree={(degree) => setDegree(degree)} ></Metric></Form.Group>
-                        </Form.Row>
-                        {toggleState.cityList && <Listlocation data={apiState.listCity} city={(city) => setCity(city)} activate={inputRef} ></Listlocation>}
-                    </Card.Header>
+                <WCard>
+                  <div className='search-bar'>
+                   <input
+                        ref={inputRef}
+                        size="60"
+                        id="city"
+                        label="city"
+                        name="city"
+                        value={city}
+                        type="text"
+                        placeholder="Search by city here.."
+                        onChange={handleChange}
+                        onKeyDown={handleSpace}
+                        onClick={addCityHandler}
+                    />
+                    <span className='search-btn' onClick={addCityHandler}><FaSearchengin/></span>
+                    <Metric degree={(degree) => setDegree(degree)} ></Metric>
+                    </div>
+                   
+                    {toggleState.cityList && <Listlocation data={apiState.listCity} city={(city) => setCity(city)} activate={inputRef} ></Listlocation>}
+
                     {showError && <WErrorModal title={showError.title} message={showError.message} onConfirm={errorHandler} />}
 
                     <GetData data={jsonData}  ></GetData>
-                    
-                    <Button variant="primary" onClick={toggle} >More Details</Button>
-                    {toggleState.moreDetails && <Weekweather data={jsonData}></Weekweather> }
-                    {toggleState.moreDetails &&  <HistoryWeather data={jsonData} retrievedData={retrievedData}></HistoryWeather>}
-                </Card>
-                
+
+                    <WButton variant="primary" onClick={toggle} >More Details</WButton>
+                    {toggleState.moreDetails && <Weekweather data={jsonData}></Weekweather>}
+                    {toggleState.moreDetails && <HistoryWeather data={jsonData} ></HistoryWeather>} 
+                </WCard>
+
             </DegreeContext.Provider>
 
-        </div >
+        </div>
     )
 }
 export default Box;

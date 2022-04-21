@@ -1,17 +1,21 @@
 import React, { useContext, useEffect } from 'react';
-import { Card, Table } from 'react-bootstrap';
 import DegreeContext from './store/degree-context';
+import WCard from './UI/WCard';
+import './HistoryWeather.css';
 
 import { useSelector, useDispatch } from "react-redux";
-
+import { Fragment } from 'react';
 
 const HistoryWeather = (props) => {
-    let item = useSelector((state) => state.historyItem);
-    const dispatch = useDispatch();
     const combinedData = [{ ...props.data[0], ...props.data[1] }]
-    localStorage.setItem('item', JSON.stringify(item));
+    let item = useSelector((state) => state.historyItem);
+
+
+    // item.push(props.retrievedData);
+    const dispatch = useDispatch();
+    // localStorage.setItem('item', JSON.stringify(item));
+    localStorage.clear('item');
     useEffect(() => {
-        item.push(...props.retrievedData);
         combinedData.map(history => (
             item = [{
                 cityName: history.name,
@@ -23,46 +27,43 @@ const HistoryWeather = (props) => {
         ))
         dispatch({ type: 'ADD', item: item });
     }, [dispatch])
-
-
     const ctx = useContext(DegreeContext);
     return (
-        <div>
-            <Card className="bg-dark text-white text-center">
-
-                <Card.Body > History
-                    <Table variant="dark" responsive>
-                        <tbody>
+        <Fragment>
+            <span>Past Searches</span>
+            <WCard className='scroll'>
+                <table>
+                    <tbody>
+                        <tr>
                             {item.map((history, id) => (
-
-                                <td key={id}>
-                                    <td>
-                                        <tr>{history.cityName}</tr>
-                                        <tr>{history.text}</tr>
-                                        <tr><img src={history.icon} /></tr>
-                                        <tr>{(ctx.degree === 'Farenheit')
-                                            ?
-
-                                            <div>
-                                                {history.temp_f}
-                                                <span>&#8457;</span>
-                                            </div>
-
-                                            :
-                                            <div>
-                                                {history.temp_c}
-                                                <span>&#8451;</span>
-                                            </div>
-                                        }</tr>
-                                    </td>
+                                <td key={id} className='table-border'>
+                                    <table>
+                                        <tbody>
+                                            <tr><td>{history.cityName}</td></tr>
+                                            <tr><td>{history.text}</td></tr>
+                                            <tr><td><img src={history.icon} /></td></tr>
+                                            <tr><td>{(ctx.degree === 'Farenheit')
+                                                ?
+                                                <div>
+                                                    {history.temp_f}
+                                                    <span>&#8457;</span>
+                                                </div>
+                                                :
+                                                <div>
+                                                    {history.temp_c}
+                                                    <span>&#8451;</span>
+                                                </div>
+                                            }</td></tr>
+                                        </tbody>
+                                    </table>
                                 </td>
-
                             ))}
-                        </tbody>
-                    </Table>
-                </Card.Body>
-            </Card>
-        </div>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </WCard>
+        </Fragment>
     )
 }
 export default HistoryWeather;
