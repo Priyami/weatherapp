@@ -29,8 +29,11 @@ const HistoryWeather = (props) => {
     }, [dispatch])
     const ctx = useContext(DegreeContext);
     return (
+       
         <Fragment>
+             <br/>
             <span>Past Searches</span>
+            <br/>
             <WCard className='scroll'>
                 <table>
                     <tbody>

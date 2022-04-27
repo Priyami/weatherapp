@@ -15,9 +15,12 @@ const Weekweather = (props) => {
     
     return (
         <Fragment>
+            <br/>
             <span>Hourly</span>
             {<Hourlyweather data={props.data}></Hourlyweather>}
+            <br/>
             <span>Three Day's Weather</span>
+            <br/>
             <WCard>
                 <table >
                     <tbody>

@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import store from './component/store/history-context';
 import Weather from './weather';
 
+
 ReactDOM.render(
   <div>
   <Provider store={store}>

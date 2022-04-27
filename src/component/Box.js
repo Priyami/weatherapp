@@ -1,8 +1,7 @@
 import React from 'react';
 import "./Box.css";
-import { FaSearchengin } from 'react-icons/fa';
+import { FaSearchengin, FaArrowDown } from 'react-icons/fa';
 import { useState, useEffect, useReducer, useRef, Fragment } from 'react';
-import background from "/src/images/Background.jpg";
 import axios from 'axios';
 import GetData from './GetData';
 import Weekweather from './Weekweather';
@@ -14,14 +13,12 @@ import DegreeContext from './store/degree-context';
 import WCard from './UI/WCard';
 import WButton from './UI/WButton';
 
-
-
 const initialState = { moreDetails: false, cityList: false };
 
 const toggleReducer = (state, action) => {
     switch (action.type) {
         case "TOGGLE_MORE_DETAILS":
-            return { moreDetails: !state.moreDetails };
+            return {...state, moreDetails: !state.moreDetails };
         case "TOGGLE_LIST_ITEM":
             return { cityList: !state.cityList };
         default:
@@ -41,7 +38,7 @@ const apiReducer = (state, action) => {
     }
 
 }
-const Box = (props) => {
+const Box = React.memo((props) => {
    // var retrievedData = JSON.parse(localStorage.getItem('item'));
     const [toggleState, dispatchToggle] = useReducer(toggleReducer, initialState);
     const [showError, setError] = useState();
@@ -58,7 +55,6 @@ const Box = (props) => {
         dispatchToggle({ type: 'TOGGLE_MORE_DETAILS' })
 
     }
-
     const handleChange = (e) => {
         e.preventDefault();
         setCity(e.target.value);
@@ -147,9 +143,7 @@ const Box = (props) => {
 
                 })
 
-
         }
-
 
         //List the cities when type on textbox       
 
@@ -169,17 +163,11 @@ const Box = (props) => {
     let jsonData = Object.keys(apiState.weatherData).map((key) => {
         return apiState.weatherData[key]
     })
-
-
-
     return (
-
-        <div className="box" style={{ backgroundImage: `url(${background})` }}>
-
+        <div className="box">
             <DegreeContext.Provider value={{
                 degree: degree,
             }}>
-
                 <WCard>
                   <div className='search-bar'>
                    <input
@@ -203,18 +191,21 @@ const Box = (props) => {
 
                     {showError && <WErrorModal title={showError.title} message={showError.message} onConfirm={errorHandler} />}
 
-                    <GetData data={jsonData}  ></GetData>
+                    <GetData data={jsonData}></GetData>
 
-                    <WButton variant="primary" onClick={toggle} >More Details</WButton>
+                    <WButton onClick={toggle} ><FaArrowDown/> More Details <FaArrowDown/></WButton>
+                 
                     {toggleState.moreDetails && <Weekweather data={jsonData}></Weekweather>}
+                    
                     {toggleState.moreDetails && <HistoryWeather data={jsonData} ></HistoryWeather>} 
+                  
                 </WCard>
 
             </DegreeContext.Provider>
 
         </div>
-    )
-}
+        )
+})
 export default Box;
 
 

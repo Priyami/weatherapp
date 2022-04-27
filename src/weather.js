@@ -5,10 +5,10 @@ import Box from './component/Box';
 class weather extends Component {
     render() {
         return (
-            <React.Fragment>
+            <React.Fragment >
                 <div>
-                    <div>
-                         <h1 className="title">Weather</h1>
+                    <div >
+                        <h1 className="title">Weather</h1>
                     </div>
 
                     <div>
