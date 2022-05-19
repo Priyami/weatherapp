@@ -4,6 +4,7 @@ import moment from 'moment';
 import DegreeContext from './store/degree-context';
 import styles from './HourlyWeather.module.css';
 const Hourlyweather = (props) => {
+    console.log("Hourly", props.data);
     let combinedData = { ...props.data[0], ...props.data[1], ...props.data[2] }
     let hourlyForecast = combinedData.forecastday[0].hour;
     const ctx = useContext(DegreeContext);
@@ -13,7 +14,7 @@ const Hourlyweather = (props) => {
     return (
         <Fragment>
             <br/>
-            <WCard className={styles.scroll} >
+            <WCard className={styles.hourlyscrollbar}>
                 <table >
                     <tbody>
                         <tr>

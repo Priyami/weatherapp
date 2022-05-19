@@ -1,6 +1,6 @@
 import React from 'react';
 import "./Box.css";
-import { FaSearchengin, FaArrowDown } from 'react-icons/fa';
+import { FaSearchengin, FaArrowDown, FaArrowUp } from 'react-icons/fa';
 import { useState, useEffect, useReducer, useRef, Fragment } from 'react';
 import axios from 'axios';
 import GetData from './GetData';
@@ -18,7 +18,7 @@ const initialState = { moreDetails: false, cityList: false };
 const toggleReducer = (state, action) => {
     switch (action.type) {
         case "TOGGLE_MORE_DETAILS":
-            return {...state, moreDetails: !state.moreDetails };
+            return { ...state, moreDetails: !state.moreDetails };
         case "TOGGLE_LIST_ITEM":
             return { cityList: !state.cityList };
         default:
@@ -39,7 +39,7 @@ const apiReducer = (state, action) => {
 
 }
 const Box = React.memo((props) => {
-   // var retrievedData = JSON.parse(localStorage.getItem('item'));
+    // var retrievedData = JSON.parse(localStorage.getItem('item'));
     const [toggleState, dispatchToggle] = useReducer(toggleReducer, initialState);
     const [showError, setError] = useState();
     const [city, setCity] = useState('boston');
@@ -53,7 +53,6 @@ const Box = React.memo((props) => {
     }
     const toggle = () => {
         dispatchToggle({ type: 'TOGGLE_MORE_DETAILS' })
-
     }
     const handleChange = (e) => {
         e.preventDefault();
@@ -68,17 +67,13 @@ const Box = React.memo((props) => {
         axios.post('https://weather-framework.herokuapp.com/api/week', { 'cityname': city })
             .then((res) => {
                 if (mounted) {
-
                     dispatchApi({ type: 'DEFAULT_WEEK_WEATHER', payload: res.data })
                 }
             })
             .catch(err => {
-
                 console.log("Error in Request", err.res);
             });
         return () => mounted = false;
-
-
 
     }, [!city.trim().length < 3])
 
@@ -92,17 +87,13 @@ const Box = React.memo((props) => {
                 title: 'Invalid Input',
                 message: 'Please enter valid city name (non-empty)'
             });
-
         }
         if (city.match(containsAlphabet)) {
             setError({
                 title: 'Invalid Input',
                 message: 'Please enter valid city name (Alphabets only)'
             })
-
         }
-
-
         axios.post('https://weather-framework.herokuapp.com/api/week', { 'cityname': city })
             .then(res => {
                 dispatchApi({ type: 'SEARCH_WEATHER', payload: res.data })
@@ -164,47 +155,53 @@ const Box = React.memo((props) => {
         return apiState.weatherData[key]
     })
     return (
-        <div className="box">
-            <DegreeContext.Provider value={{
-                degree: degree,
-            }}>
-                <WCard>
-                  <div className='search-bar'>
-                   <input
-                        ref={inputRef}
-                        size="60"
-                        id="city"
-                        label="city"
-                        name="city"
-                        value={city}
-                        type="text"
-                        placeholder="Search by city here.."
-                        onChange={handleChange}
-                        onKeyDown={handleSpace}
-                        onClick={addCityHandler}
-                    />
-                    <span className='search-btn' onClick={addCityHandler}><FaSearchengin/></span>
-                    <Metric degree={(degree) => setDegree(degree)} ></Metric>
-                    </div>
-                   
-                    {toggleState.cityList && <Listlocation data={apiState.listCity} city={(city) => setCity(city)} activate={inputRef} ></Listlocation>}
+        <Fragment>
+            <div className="box">
+                <DegreeContext.Provider value={{
+                    degree: degree,
+                }}>
+                    <WCard>
+                        <div className='search-bar'>
+                            <input
+                                ref={inputRef}
+                                size="60"
+                                id="city"
+                                label="city"
+                                name="city"
+                                value={city}
+                                type="text"
+                                placeholder="Search by city here.."
+                                onChange={handleChange}
+                                onKeyDown={handleSpace}
+                                onClick={addCityHandler}
+                            />
+                            <span className='search-btn' onClick={addCityHandler}><FaSearchengin /></span>
+                            <Metric degree={(degree) => setDegree(degree)} ></Metric>
+                        </div>
 
-                    {showError && <WErrorModal title={showError.title} message={showError.message} onConfirm={errorHandler} />}
+                        {toggleState.cityList && <Listlocation data={apiState.listCity} city={(city) => setCity(city)} activate={inputRef} ></Listlocation>}
 
-                    <GetData data={jsonData}></GetData>
+                        {showError && <WErrorModal title={showError.title} message={showError.message} onConfirm={errorHandler} />}
 
-                    <WButton onClick={toggle} ><FaArrowDown/> More Details <FaArrowDown/></WButton>
-                 
+                        <GetData data={jsonData}></GetData>
+
+                        <WButton onClick={toggle} >{toggleState.moreDetails ? <FaArrowDown /> : <FaArrowUp />} More Details {toggleState.moreDetails ? <FaArrowDown /> : <FaArrowUp />}</WButton>
+                    </WCard>
+                </DegreeContext.Provider>
+
+            </div>
+            <div className="box">
+            <DegreeContext.Provider value={{ degree: degree, }}>
+            {toggleState.moreDetails &&<WCard className="scroll">
+             
                     {toggleState.moreDetails && <Weekweather data={jsonData}></Weekweather>}
-                    
-                    {toggleState.moreDetails && <HistoryWeather data={jsonData} ></HistoryWeather>} 
-                  
-                </WCard>
 
+                    {toggleState.moreDetails && <HistoryWeather data={jsonData}></HistoryWeather>}
+            </WCard>}
             </DegreeContext.Provider>
-
-        </div>
-        )
+            </div>
+        </Fragment>
+    )
 })
 export default Box;
 

@@ -22,6 +22,12 @@ const weatherReducer = (state = initialState, action) => {
         };
 
     }
+    if (action.type === 'DEL') {
+        return {
+            ...state,
+            historyItem: [],
+        }
+    }
 
     return state;
 }
