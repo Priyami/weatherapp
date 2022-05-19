@@ -1,7 +1,9 @@
-.scroll{ 
-    overflow-x:scroll;  
-    overflow-y:visible;
-    padding-bottom:1px;
+.hourlyscrollbar {
+	background-color: #6cabee;
+	width: 500px;
+  	height: 200px;
+	overflow-x: scroll;
+	overflow-y: hidden;
 }
 .border {
     border-left: 1px solid #444242;

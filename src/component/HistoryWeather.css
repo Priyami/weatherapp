@@ -4,8 +4,10 @@
 table{
     text-align: center;
 }
-.scroll{ 
+.historyscroll{ 
+    background-color: #6cabee;
+    width: 500px;
+  	height: 150px;
     overflow-x:scroll;  
-    overflow-y:visible;
-    padding-bottom:1px;
+    overflow-y:hidden;
 }

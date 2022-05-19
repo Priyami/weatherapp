@@ -6,6 +6,7 @@ import WCard from './UI/WCard';
 import "./Weekweather.css";
 
 const Weekweather = (props) => {
+    console.log("Weekweater", props.data);
     var combinedData = { ...props.data[0], ...props.data[1], ...props.data[2] }
     var forecast = combinedData.forecastday;
     const ctx = useContext(DegreeContext);
@@ -21,7 +22,7 @@ const Weekweather = (props) => {
             <br/>
             <span>Three Day's Weather</span>
             <br/>
-            <WCard>
+            <WCard className='weekscrollbar'>
                 <table >
                     <tbody>
                         <tr>

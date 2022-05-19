@@ -1,6 +1,14 @@
 .table-border {
     border-left: 1px solid #444242;
 }
-table{
+table {
     text-align: center;
+    background-color: #6cabee;
+}
+.weekscrollbar {
+    background-color: #6cabee;
+	width: 500px;
+  	height: 150px;
+	overflow-x: scroll;
+	overflow-y: hidden;
 }

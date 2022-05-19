@@ -9,12 +9,7 @@ import { Fragment } from 'react';
 const HistoryWeather = (props) => {
     const combinedData = [{ ...props.data[0], ...props.data[1] }]
     let item = useSelector((state) => state.historyItem);
-
-
-    // item.push(props.retrievedData);
     const dispatch = useDispatch();
-    // localStorage.setItem('item', JSON.stringify(item));
-    localStorage.clear('item');
     useEffect(() => {
         combinedData.map(history => (
             item = [{
@@ -26,15 +21,19 @@ const HistoryWeather = (props) => {
             }]
         ))
         dispatch({ type: 'ADD', item: item });
+        const timer = setTimeout(() => {
+            dispatch({ type: 'DEL'});
+            }, 30000);
+            return () => clearTimeout(timer)
+       
     }, [dispatch])
     const ctx = useContext(DegreeContext);
-    return (
-       
+    return (      
         <Fragment>
              <br/>
             <span>Past Searches</span>
             <br/>
-            <WCard className='scroll'>
+            <WCard className='historyscroll'>
                 <table>
                     <tbody>
                         <tr>
@@ -63,7 +62,6 @@ const HistoryWeather = (props) => {
                             ))}
                         </tr>
                     </tbody>
-
                 </table>
             </WCard>
         </Fragment>
