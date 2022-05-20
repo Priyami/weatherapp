@@ -1,13 +1,14 @@
 .table-border {
-    border-right: 1px solid #444242;
+    border-right: 0.5px solid white;
 }
 table{
+    background-color: #6cabee;
     text-align: center;
 }
 .historyscroll{ 
     background-color: #6cabee;
     width: 500px;
-  	height: 150px;
+  	height: 250px;
     overflow-x:scroll;  
     overflow-y:hidden;
 }
